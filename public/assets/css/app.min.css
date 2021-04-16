@@ -29379,3 +29379,7 @@ width:80%;
 .datepicker-inline {
     width: 100% !important;
 }
+
+.table-responsive{
+    overflow:visible;
+}

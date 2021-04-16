@@ -1,25 +1,48 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
+const admin = require('../../axios/admin')
+const ls = require('local-storage')
+const auth = require('../../axios/auth')
 
-import axios from 'axios'
-
-async function getUser() {
-  try {
-    const response = await axios.post('http://localhost:3000/admin/login',
-    {
-      userName:'admin', 
-      password:'ready123'
-    }
-    );
-    console.log(response);
-  } catch (error) {
-    console.log('It failed');
-    console.log(error)
+class adminProfile extends Component {
+  state={
+    adminId: ls.get('adminId'),
+    userType: ls.get('userType'),
+    token: ls.get('token'),
+    loggedIn: true
   }
-}
-getUser()
-export default props => (
-    <div className="page-container">
-  <div className="main-content">
+
+  verification = async () => {
+    let verifyToken = await auth.verifyToken(this.state.adminId,this.state.userType,this.state.token)
+    if(verifyToken.length === 0 ){
+      this.setState({
+        loggedIn:false
+      })
+    }else{
+      if(verifyToken[0].expired === 1){
+        this.setState({
+          loggedIn:false
+        })
+      }
+    }
+  }
+
+  componentDidMount(){
+    if(this.state.adminId === null || this.state.adminId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
+      this.setState({
+        loggedIn:false
+      })
+      window.location.href='/error'
+    }else{
+      this.verification()
+    }
+    
+  }
+
+  isLoggedIn = () => {
+    if(this.state.loggedIn){
+      return(
+        <div>
+          <div className="main-content">
     <div className="page-header">
       <h2 className="header-title">Profile</h2>
       <div className="header-sub-title">
@@ -42,7 +65,7 @@ export default props => (
                   </div>
                 </div>
                 <div className="text-center text-sm-left m-v-15 p-l-30">
-                  <h2 className="m-b-5">ALI ZAIN</h2>
+                  <h2 className="m-b-5">{this.state.adminName}</h2>
                   <p className="text-opacity font-size-13">FA17-BSE-016</p>
                   <button className="btn btn-primary btn-tone">Edit Profile</button>
                 </div>
@@ -90,7 +113,29 @@ export default props => (
       </span>
     </div>
   </footer>
-  {props.children}
-</div>
+  {this.props.children}
+        </div>
+      )
+    
+    }
+    else{
+      window.location.href='/error'
+    }
+  }
 
-)
+
+
+  render() {
+
+    return(
+
+    <div className="page-container" >
+    
+    {this.isLoggedIn()}
+</div>
+    )
+  }
+  
+}
+
+export default adminProfile

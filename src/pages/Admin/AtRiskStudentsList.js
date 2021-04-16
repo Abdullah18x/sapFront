@@ -1,64 +1,49 @@
-import React, { Component} from 'react';
-import SectionList from '../../components/SectionList'
+import React, { Component } from 'react';
 const ls = require('local-storage')
 const auth = require('../../axios/auth')
 const admin = require('../../axios/admin')
 
-class AdminViewSections extends Component{
-  state={
-    adminId: ls.get('adminId'),
-    userType: ls.get('userType'),
-    token: ls.get('token'),
-    sections:[],
-    loggedIn: true
-  }
-
-  verification = async () => {
-    let verifyToken = await auth.verifyToken(this.state.adminId,this.state.userType,this.state.token)
-    if(verifyToken.length === 0 ){
-      this.setState({
-        loggedIn:false
-      })
-    }else{
-      if(verifyToken[0].expired === 1){
-        this.setState({
-          loggedIn:false
-        })
+class AtRiskStudents extends Component{
+    state={
+        adminId: ls.get('adminId'),
+        userType: ls.get('userType'),
+        token: ls.get('token'),
+        loggedIn: true
       }
-    }
-  }
 
-  getSectionList = async () =>{
-    try {
-      let retrivedList = await admin.getSections(this.state.token)
-      this.setState({
-        sections:retrivedList
-      })
-    } catch (error) {
-      console.log(error)
-    }
-    
-  }
+    verification = async () => {
+        let verifyToken = await auth.verifyToken(this.state.adminId,this.state.userType,this.state.token)
+        if(verifyToken.length === 0 ){
+          this.setState({
+            loggedIn:false
+          })
+          return
+        }else{
+          if(verifyToken.expired === 1){
+            this.setState({
+              loggedIn:false
+            })
+          }
+          return
+        }
+      }
 
-  componentDidMount(){
-    if(this.state.adminId === null || this.state.adminId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
-      this.setState({
-        loggedIn:false
-      })
-      window.location.href='/error'
-    }else{
-      this.verification()
-    }
-    if(this.state.loggedIn){
-      this.getSectionList()
-    }
-    
-  }
+      componentDidMount(){
+        if(this.state.adminId === null || this.state.adminId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
+          this.setState({
+            loggedIn:false
+          })
+          window.location.href='/error'
+        }else{
+          this.verification()
+        }
+        
+      }
 
-  isLoggedIn = () => {
-    if(this.state.loggedIn){
-      return(
-        <div>
+      isLoggedIn = () => {
+        if(this.state.loggedIn){
+          return(
+            <div>
           <div className="main-content">
     <div className="page-header">
       <div className="header-sub-title">
@@ -85,20 +70,19 @@ class AdminViewSections extends Component{
             </thead>
             <tbody>
               
-            {
+            {/* {
                   this.state.sections.map((data, index) => {
                     return (
                       <SectionList 
                         key={index}
                         sectionId={data.sectionId}
                         section={data.section}
-                        students={data.students}
-                        lecturers={data.totalLecturers}
-                        
+                        students='2'
+                        lecturers='2'
                       />
                     )
                   })
-                }
+                } */}
               
             </tbody>
             <tfoot>
@@ -124,20 +108,21 @@ class AdminViewSections extends Component{
   </footer>
   {this.props.children}
         </div>
-      )
-    }
-    else{
-      window.location.href='/error'
-    }
-  }
+          )
+        }else{
+          window.location.href='/error'
+        }
+    
+      }
 
-  render(){
-    return(
-      <div className="page-container">
-  {this.isLoggedIn()}
-</div>
-    )
-  }
+      render() {
+        return (
+          <div className="page-container">
+            {this.isLoggedIn()}
+          </div>
+      
+      )
+      }
 }
 
-export default AdminViewSections
+export default AtRiskStudents

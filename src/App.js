@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import React, { Component } from 'react';
-import { render } from "react-dom";
 import { Router, Link } from "@reach/router";
 
 import Login from './pages/Login.js';
@@ -23,16 +22,25 @@ import AdminAddSections from './pages/Admin/AdminAddSections.js';
 import AdminAddTeachers from './pages/Admin/AdminAddTeachers.js';
 import AdminProfile from './pages/Admin/AdminProfile.js';
 import AdminViewSections from './pages/Admin/AdminViewSections.js';
+import AdminViewSectionDetails from './pages/Admin/ViewSectionDetails';
 import AdminViewTeachers from './pages/Admin/AdminViewTeachers.js';
+import AdminViewteacherProfile from './pages/Admin/ViewTeacherProfile'
+import AtRiskStudents from './pages/Admin/AtRiskStudentsList'
+import SectionWithARS from './pages/Admin/SectionWithARS'
+import LecturerStudents from './pages/Admin/LecturerStudents'
+import EditSection from './pages/Admin/EditSection'
 
 import TeacherDashboard from './pages/Teacher/TeacherDashboard.js';
 import TeacherAddAssignments from './pages/Teacher/TeacherAddAssignments.js';
 import TeacherAddStudents from './pages/Teacher/TeacherAddStudents.js';
 import TeacherAssignments from './pages/Teacher/TeacherAssignments.js';
 import TeacherProfile from './pages/Teacher/TeacherProfile.js';
+import TeacherAssignmentPreview from './pages/Teacher/TeacherAssignmentPreview.js';
 import TeacherViewStudents from './pages/Teacher/TeacherViewStudents.js';
+import TeacherSubmittedAssignments from './pages/Teacher/TeacherSubmittedAssignments.js';
 import TeacherChat from './pages/Teacher/TeacherChat.js';
 import TeacherMail from './pages/Teacher/TeacherMail.js';
+import ErrorPage from './pages/error.js'
 
 import Settings from './pages/Settings.js';
 import Search from './components/Search.js';
@@ -43,6 +51,8 @@ function App() {
     <Router>
       <Login path="/" />
       <IDE path="/ide"/>
+      <ErrorPage path='/error/' />
+      
       <StudentHeader path="/student/">
         <StudentDashboard path="/*"/>
         <StudentChat path="/chat" />
@@ -60,7 +70,13 @@ function App() {
         <AdminProfile path="/profile"/>
         <AdminViewTeachers path="/teachers"/>
         <AdminViewSections path="/sections"/>
+        <AdminViewSectionDetails path="/sectionDetails"/>
+        <AtRiskStudents path="/atRiskStudents"/>
+        <SectionWithARS path="/sectionsWithARS"/>
         <Settings path="/settings" />
+        <AdminViewteacherProfile path="/teachersProfile"/>
+        <LecturerStudents path='/lecturerStudents'/>
+        <EditSection path='/editSection'/>
       </AdminHeader>
       
       <TeacherHeader path="/teacher/">
@@ -68,6 +84,8 @@ function App() {
         <TeacherAddAssignments path="/add-assignment"/>
         <TeacherAddStudents path="/add-student"/>
         <TeacherAssignments path="/assignments"/>
+        <TeacherSubmittedAssignments path="/submissions/" />
+        <TeacherAssignmentPreview path="/preview/" />
         <TeacherProfile path="/profile"/>
         <TeacherViewStudents path="/students"/>
         <TeacherChat path="/chat"/>

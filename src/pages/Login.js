@@ -1,7 +1,60 @@
 import React, {Component} from 'react';
 import NavLink from './NavLink.js'
+const requestInfo = require('../axios/login')
+const ls = require('local-storage')
 
-class Login extends React.Component {
+
+class Login extends Component {
+    state = {
+        userType: "student",
+        userName: '',
+        password: ''
+    }
+
+    setUsername = (event) => {
+        let value = event.target.value
+        this.setState({
+            userName:value
+        })
+    }
+
+    setPassword = (event) => {
+        let value = event.target.value
+        this.setState({
+            password:value
+        })
+    }
+
+    changeUserType = (event) => {
+        let value = event.target.value
+        this.setState({
+            userType:value
+        })
+    }
+
+    Login = async () => {
+        if(this.state.userType === "admin"){
+            let response = await requestInfo.adminLogin(this.state.userName, this.state.password)
+            var jsObject = JSON.parse(JSON.stringify(response))
+            ls.clear()
+            ls('adminId',jsObject.adminId)
+            ls('userType',1)
+            ls('token', jsObject.token)
+            window.location.href='/admin'
+        }else if(this.state.userType === "teacher"){
+            let response = await requestInfo.teacherLogin(this.state.userName, this.state.password)
+            var jsObject = JSON.parse(JSON.stringify(response))
+            console.log(jsObject)
+            ls.clear()
+            ls('teacherId',jsObject.lecturerId)
+            ls('userType',2)
+            ls('token', jsObject.token)
+            window.location.href='/teacher'
+
+        }else if(this.state.userType === "student"){
+
+        }
+    }
     render() {
         return (
             <div className="app">
@@ -40,7 +93,7 @@ class Login extends React.Component {
                                 <label className="font-weight-semibold" htmlFor="userName">Username:</label>
                                 <div className="input-affix">
                                     <i className="prefix-icon anticon anticon-user" />
-                                    <input type="text" className="form-control" id="userName" placeholder="Username" />
+                                    <input type="text" className="form-control" id="userName" placeholder="Username" onChange={(e) => this.setUsername(e)} />
                                 </div>
                                 </div>
                                 <div className="form-group">
@@ -48,12 +101,12 @@ class Login extends React.Component {
                                 <a className="float-right font-size-13 text-muted" href>Forget Password?</a>
                                 <div className="input-affix m-b-10">
                                     <i className="prefix-icon anticon anticon-lock" />
-                                    <input type="password" className="form-control" id="password" placeholder="Password" />
+                                    <input type="password" className="form-control" id="password" placeholder="Password" onChange={(e) => this.setPassword(e)} />
                                 </div>
                                 </div>
                                 <div className="form-group">
                                 <label htmlFor="inputState">User</label>
-                                <select id="inputState" className="form-control">
+                                <select id="inputState" className="form-control" onChange={(e) => {this.changeUserType(e)}}>
                                     <option value="student" selected>Student</option>
                                     <option value="teacher">Teacher</option>
                                     <option value="admin">Admin</option>
@@ -62,7 +115,7 @@ class Login extends React.Component {
                                 <br />
                                 <div className="form-group">
                                 <div className="d-flex align-items-center justify-content-between">
-                                    <button className="btn btn-primary">Log In</button>
+                                    <button type="button" className="btn btn-primary" onClick={this.Login}>Log In</button>
                                 </div>
                                 </div>
                             </form>

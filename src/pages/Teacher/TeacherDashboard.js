@@ -1,8 +1,59 @@
 import React, { Component} from 'react';
+import { Link } from "@reach/router";
+const ls = require('local-storage')
+const auth = require('../../axios/auth')
+const lecturer = require('../../axios/lecturer')
 
-export default props => (
-<div className="page-container">
-  <div className="main-content">
+class TeacherDashboard extends Component{
+  state={
+    lecturerId: ls.get('teacherId'),
+    userType: ls.get('userType'),
+    token: ls.get('token'),
+    userName: '',
+    email:'',
+    name:'',
+    status:'',
+    loggedIn: true
+  }
+
+  setLecturer = async () => {
+    let lecturerData = await lecturer.getUser(this.state.lecturerId, this.state.token)
+    console.log(lecturerData)
+    this.setState({
+      userName: lecturerData.userName,
+      email: lecturerData.email,
+      name: lecturerData.name,
+      status: lecturerData.status
+    })
+ 
+  }
+
+  verification = async () => {
+    let verifyToken = await auth.verifyToken(this.state.lecturerId,this.state.userType,this.state.token)
+    if(verifyToken.length === 0 ){
+      this.setState({
+        loggedIn:false
+      })
+    }else{
+      if(verifyToken.expired === 1){
+        this.setState({
+          loggedIn:false
+        })
+      }
+    }
+  }
+
+  isLoggedIn = () => {
+    if(this.state.lecturerId === null || this.state.lecturerId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
+      this.setState({
+        loggedIn:false
+      })
+      window.location.href='/error'
+    }
+    if(this.state.loggedIn){
+      return (
+        <div onLoad={this.setLecturer}>
+          <div className="main-content">
     <div className="page-header no-gutters">
       <div className="d-md-flex align-items-md-center justify-content-between">
         <div className="media m-v-10 align-items-center">
@@ -51,7 +102,12 @@ export default props => (
             <div className="d-flex justify-content-between align-items-center">
               <h5>Recent Submissions</h5>
               <div>
-                <a href="javascript:void(0);" className="btn btn-sm btn-default">View All</a>
+                {/* <a href="javascript:void(0);" className="btn btn-sm btn-default">View All</a> */}
+                
+                <Link className="btn btn-sm btn-default" to='/teacher/students'>
+                View All
+                </Link>
+                
               </div>
             </div>
             <div className="m-t-30">
@@ -500,6 +556,21 @@ export default props => (
       </span>
     </div>
   </footer>
-</div>
+        </div>
+      )
+  }else{
+    window.location.href='/error'
+  }
+}
+  
 
+  render(){
+    return(
+      <div className="page-container">
+        {this.isLoggedIn()}
+</div>
     )
+  }
+}
+
+export default TeacherDashboard

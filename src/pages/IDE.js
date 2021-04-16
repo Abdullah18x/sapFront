@@ -1,8 +1,51 @@
 import React, { Component} from 'react';
 import NavLink from './../pages/NavLink.js';
+import '../ide.css';
+import Script from 'react-load-script';
 
-export default props => (
+
+class ide extends Component{
+  state = {
+    scriptLoaded: false
+  }
+  handleScriptCreate = () => {
+    this.setState({ scriptLoaded: false })
+  }
+  render(){
+return(
     <div>
+      <Script
+      url="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+      <Script
+      url="https://cdnjs.cloudflare.com/ajax/libs/golden-layout/1.5.9/goldenlayout.min.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+    <Script
+      url="https://unpkg.com/monaco-editor/min/vs/loader.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+    
+    <Script
+      url="https://unpkg.com/monaco-editor@0.18.1/min/vs/editor/editor.main.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+    <Script
+      url="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+    <Script
+      url="http://58-studios.com/ide.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+    
+    <Script
+      url="https://ide.judge0.com/third_party/download.js"
+      onCreate={this.handleScriptCreate.bind(this)}
+    />
+   
+
   <div id="site-navigation" className="ui small inverted menu">
     <div id="site-header" className="header item">
       <a href="/">
@@ -215,4 +258,6 @@ export default props => (
     </span></div>
 </div>
 
-)
+)}}
+
+export default ide

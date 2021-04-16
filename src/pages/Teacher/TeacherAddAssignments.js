@@ -39,6 +39,18 @@ export default props => (
                 <label className="custom-file-label" htmlFor="customFile">Choose file</label>
               </div>
             </div>
+            <div className="form-row">
+              <div className="form-group col-md-12">
+                <label htmlFor="inputEmail4">Details</label>
+                <textarea className="form-control" id="input5" placeholder="Details"></textarea>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-12">
+                <label htmlFor="inputEmail4">Result</label>
+                <textarea className="form-control" id="input6" placeholder="Result"></textarea>
+              </div>
+            </div>
             <div className="form-group">
               <div className="form-group d-flex align-items-center">
                 <div className="switch m-r-10">
