@@ -35,7 +35,7 @@ const sectionList = (props) => {
                           <i className="anticon anticon-eye" />
                           <span className="m-l-10">Edit</span>
                       </Link>
-                      <button className="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button" onClick={props.remove}>
                         <i className="anticon anticon-delete" />
                         <span className="m-l-10">Remove</span>
                       </button>

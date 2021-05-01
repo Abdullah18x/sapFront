@@ -34,8 +34,9 @@ class LecturerStudents extends Component{
         try {
           let sectionId = this.props.location.state.sectionId
           let lecturerId = this.props.location.state.lecturerId
+          let subjectId = this.props.location.state.subjectId
           let section = await admin.getSection(sectionId,this.state.token)
-          let returnedStudents = await admin.getLecturerStudents(lecturerId,sectionId,this.state.token)
+          let returnedStudents = await admin.getLecturerStudents(lecturerId,sectionId,subjectId,this.state.token)
           this.setState({
               section:section[0].section,
               lecturerStudents:returnedStudents

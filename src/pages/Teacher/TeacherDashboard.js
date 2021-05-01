@@ -43,16 +43,26 @@ class TeacherDashboard extends Component{
     }
   }
 
-  isLoggedIn = () => {
+  componentDidMount(){
     if(this.state.lecturerId === null || this.state.lecturerId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
       this.setState({
         loggedIn:false
       })
       window.location.href='/error'
+    }else{
+      this.verification()
     }
     if(this.state.loggedIn){
+      this.setLecturer()
+    }
+    
+  }
+
+  isLoggedIn = () => {
+    
+    if(this.state.loggedIn){
       return (
-        <div onLoad={this.setLecturer}>
+        <div>
           <div className="main-content">
     <div className="page-header no-gutters">
       <div className="d-md-flex align-items-md-center justify-content-between">

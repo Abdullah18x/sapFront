@@ -245,6 +245,23 @@ let lecturerAtRiskStudents = async (token) => {
   }
 }
 
+let alllecturerAtRiskStudents = async (token) => {
+  try {
+    let response = await axios.post('http://localhost:3000/sections/getAlllecturerAtRiskStudents',{},
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
 let getStats = async (token) => {
   try {
     let response = await axios.post('http://localhost:3000/admin/getStats',{},
@@ -302,12 +319,13 @@ let getSectionStudents = async (sectionId,token) => {
   }
 }
 
-let getLecturerStudents = async (lecturerId,sectionId,token) => {
+let getLecturerStudents = async (lecturerId,sectionId,subjectId,token) => {
   try {
     const response = await axios.post('http://localhost:3000/student/getLecturerStudents',
     {
       sectionId:sectionId,
-      lecturerId:lecturerId
+      lecturerId:lecturerId,
+      subjectId:subjectId
     },
     {
       headers:{
@@ -316,6 +334,140 @@ let getLecturerStudents = async (lecturerId,sectionId,token) => {
     }
     );
     return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let addSection = async (section,token) => {
+  try {
+    const response = await axios.post('http://localhost:3000/sections/addSection',
+    {
+      section:section
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+
+let updateSection = async (section,sectionId,token) => {
+  try {
+    let response = await axios.patch('http://localhost:3000/sections/updateSection',
+    {
+      sectionId:sectionId,
+      section:section
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let removeSection = async (sectionId,token) => {
+  try {
+    await axios.delete('http://localhost:3000/sections/removeSection', {
+      headers: {
+        Authorization: token
+      },
+      data: {
+        sectionId: sectionId
+      }
+    });
+    
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let getAtRiskStudents = async (token) => {
+  try {
+    const response = await axios.post('http://localhost:3000/student/getAtRiskStudents',{},
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let getStudents = async (token) => {
+  try {
+    const response = await axios.post('http://localhost:3000/student/getAll',{},
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let unAssignTeacher = async (lecturerId,sectionId,subjectId,token) => {
+  try {
+    let response = await axios.post('http://localhost:3000/lecturer/unAssignLecturer',
+    {
+      lecturerId:lecturerId,
+      sectionId:sectionId,
+      subjectId:subjectId
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let removeTeacher = async (lecturerId,token) => {
+  try {
+    await axios.delete('http://localhost:3000/lecturer/deleteL', {
+      headers: {
+        Authorization: token
+      },
+      data: {
+        lecturerId: lecturerId
+      }
+    });
+    
   } catch (error) {
     console.log(error)
     return error
@@ -337,8 +489,16 @@ export {
   updateLecturerStatus,
   recentSections,
   lecturerAtRiskStudents,
+  alllecturerAtRiskStudents,
   getStats,
   getAssignedLecturers,
   getSectionStudents,
-  getLecturerStudents
+  getLecturerStudents,
+  addSection,
+  updateSection,
+  removeSection,
+  getAtRiskStudents,
+  getStudents,
+  unAssignTeacher,
+  removeTeacher
 }

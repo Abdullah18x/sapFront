@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link } from "@reach/router";
 const ls = require('local-storage')
 const auth = require('../../axios/auth')
 const admin = require('../../axios/admin')
@@ -8,6 +9,7 @@ class AtRiskStudents extends Component{
         adminId: ls.get('adminId'),
         userType: ls.get('userType'),
         token: ls.get('token'),
+        atRiskStudents:[],
         loggedIn: true
       }
 
@@ -28,6 +30,17 @@ class AtRiskStudents extends Component{
         }
       }
 
+      setAtRiskStudents = async () =>{
+        try {
+          let atRiskStudents = await admin.getAtRiskStudents(this.state.token)
+          this.setState({
+            atRiskStudents:atRiskStudents
+          })
+        } catch (error) {
+          
+        }
+      }
+
       componentDidMount(){
         if(this.state.adminId === null || this.state.adminId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
           this.setState({
@@ -37,6 +50,9 @@ class AtRiskStudents extends Component{
         }else{
           this.verification()
         }
+        if(this.state.loggedIn){
+          this.setAtRiskStudents()
+      }
         
       }
 
@@ -49,48 +65,73 @@ class AtRiskStudents extends Component{
       <div className="header-sub-title">
         <nav className="breadcrumb breadcrumb-dash">
           <a href="#" className="breadcrumb-item"><i className="anticon anticon-home m-r-5" />Home</a>
-          <a className="breadcrumb-item" href="#">Sections</a>
-          <span className="breadcrumb-item active">View All Sections</span>
+          <a className="breadcrumb-item" href="#">Students</a>
+          <span className="breadcrumb-item active">At Risk Students</span>
         </nav>
       </div>
     </div>
     <div className="card">
       <div className="card-body">
-        <h4>View All Sections</h4>
+        <h4>At Risk Students</h4>
         <div className="m-t-25">
           <table id="data-table" className="table">
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Email</th>
                 <th>Section</th>
-                <th>Assigned Teachers</th>
-                <th>Students</th>
+                <th>Subject</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               
-            {/* {
-                  this.state.sections.map((data, index) => {
-                    return (
-                      <SectionList 
-                        key={index}
-                        sectionId={data.sectionId}
-                        section={data.section}
-                        students='2'
-                        lecturers='2'
-                      />
-                    )
-                  })
-                } */}
+            {
+                        this.state.atRiskStudents.map((data, index) => {
+                          return (
+                            <tr key={index}>
+                              <td>{data.studentId}</td>
+                              <td>{data.name}</td>
+                              <td>{data.rollNo}</td>
+                              <td>{data.email}</td>
+                              <td>{data.section}</td>
+                              <td>{data.subject}</td>
+                              <td>
+                                <div className="dropdown dropdown-animated scale-left">
+                                    <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                    <i className="anticon anticon-ellipsis" />
+                                    </a>
+                                    <div className="dropdown-menu">
+                                    <Link 
+                                        className="dropdown-item"
+                                        to='/admin/lecturerStudents'
+                                        state={{
+                                            
+                                        }}
+                                        >
+                                        <i className="anticon anticon-eye" />
+                                        <span className="m-l-10">View Profile</span>
+                                    </Link>
+                                    
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                          )
+                        })
+                      }
               
             </tbody>
             <tfoot>
               <tr>
-                <th>ID</th>
+              <th>ID</th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Email</th>
                 <th>Section</th>
-                <th>Students</th>
-                <th>Subjects</th>
+                <th>Subject</th>
                 <th>Action</th>
               </tr>
             </tfoot>

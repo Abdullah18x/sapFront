@@ -16,7 +16,6 @@ class Viewteacher extends Component{
 
   viewTeachers = async () => {
     let returnedteacher = await admin.getLecturerList(this.state.token)
-    console.log(returnedteacher)
     this.setState({
       teachers:returnedteacher
     })
@@ -37,6 +36,19 @@ class Viewteacher extends Component{
     }
   }
 
+  assignLecturerSection(lecturerId){
+
+  }
+  
+  deletelecturer = async (lecturerId) => {
+    try {
+      await admin.removeTeacher(lecturerId, this.state.token)
+      this.viewTeachers()
+    } catch (error) {
+      
+    }
+  }
+
   componentDidMount(){
     if(this.state.adminId === null || this.state.adminId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
       this.setState({
@@ -52,14 +64,6 @@ class Viewteacher extends Component{
     
   }
 
-
-assignLecturerSection(lecturerId){
-
-}
-
-deletelecturer(lecturerId){
-  // console.log(lecturerId.target.id)
-}
 
   isLoggedIn = () => {
     if(this.state.loggedIn){
@@ -100,8 +104,9 @@ deletelecturer(lecturerId){
                         name={data.userName}
                         email={data.email}
                         status={data.status}
-                        assigneSection={this.assignLecturerSection}
-                        deleteLecturer={this.deletelecturer}
+                        assignSection={()=>this.assignLecturerSection(data.lecturerId)}
+                        deleteLecturer={() => {this.deletelecturer(data.lecturerId)}}
+
                       />
                     )
                   })

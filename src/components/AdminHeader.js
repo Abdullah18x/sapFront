@@ -234,6 +234,17 @@ class AdminHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/admin/viewStudents">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">View Students</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/admin/atRiskStudents">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />
@@ -245,11 +256,11 @@ class AdminHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink className="dropdown-toggle" to="/admin/sectionsWithARS">
+                                <NavLink className="dropdown-toggle" to="/admin/teachersWithARS">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />
                                     </span>
-                                    <span className="title">Sections With ARS</span>
+                                    <span className="title">Teahers With ARS</span>
                                     <span className="arrow">
                                         <i className="arrow-icon" />
                                     </span>

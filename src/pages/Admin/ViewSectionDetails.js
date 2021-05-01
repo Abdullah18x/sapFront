@@ -133,7 +133,9 @@ class ViewSectionDetails extends Component{
                                         to='/admin/lecturerStudents'
                                         state={{
                                           sectionId:this.props.location.state.sectionId,
-                                          lecturerId:data.lecturerId
+                                          lecturerId:data.lecturerId,
+                                          subjectId:data.subjectId
+                                          
                                         }}
                                         >
                                         <i className="anticon anticon-eye" />

@@ -26,9 +26,10 @@ import AdminViewSectionDetails from './pages/Admin/ViewSectionDetails';
 import AdminViewTeachers from './pages/Admin/AdminViewTeachers.js';
 import AdminViewteacherProfile from './pages/Admin/ViewTeacherProfile'
 import AtRiskStudents from './pages/Admin/AtRiskStudentsList'
-import SectionWithARS from './pages/Admin/SectionWithARS'
+import TeachersWithARS from './pages/Admin/TeachersWithARS'
 import LecturerStudents from './pages/Admin/LecturerStudents'
 import EditSection from './pages/Admin/EditSection'
+import ViewStudents from './pages/Admin/StudentsList'
 
 import TeacherDashboard from './pages/Teacher/TeacherDashboard.js';
 import TeacherAddAssignments from './pages/Teacher/TeacherAddAssignments.js';
@@ -72,11 +73,12 @@ function App() {
         <AdminViewSections path="/sections"/>
         <AdminViewSectionDetails path="/sectionDetails"/>
         <AtRiskStudents path="/atRiskStudents"/>
-        <SectionWithARS path="/sectionsWithARS"/>
+        <TeachersWithARS path="/teachersWithARS"/>
         <Settings path="/settings" />
         <AdminViewteacherProfile path="/teachersProfile"/>
         <LecturerStudents path='/lecturerStudents'/>
         <EditSection path='/editSection'/>
+        <ViewStudents path='/viewStudents'/>
       </AdminHeader>
       
       <TeacherHeader path="/teacher/">

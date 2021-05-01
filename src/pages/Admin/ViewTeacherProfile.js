@@ -47,7 +47,6 @@ class Viewteacherprofile extends Component{
                 name:returedLecturer.name,
                 status:returedLecturer.status
             })
-            console.log(returedLecturer)
           } catch (error) {
             window.location.href='/error'
             // console.log(error)
@@ -61,10 +60,21 @@ class Viewteacherprofile extends Component{
               this.setState({
                 assignedSections:returnedSection
               })
-              console.log(returnedSection)
           } catch (error) {
-              
+              console.log(error)
           }
+      }
+
+      unAssignTeacher = async (lecturerId, sectionId, subjectId) => {
+        try {
+          let unassignedStatus = await admin.unAssignTeacher(lecturerId,sectionId,subjectId,this.state.token)
+          let returnedSection = await admin.getAssignedSections(this.props.location.state.teacherId,this.state.token)
+          this.setState({
+            assignedSections:returnedSection
+          })
+        } catch (error) {
+          
+        }
       }
 
       componentDidMount(){
@@ -170,8 +180,11 @@ class Viewteacherprofile extends Component{
                         key={index}
                         sectionId={data.sectionId}
                         section={data.section}
-                        numberOfStudents='2'
+                        numberOfStudents={data.subjectStudents}
                         subject={data.subject}
+                        subjectId={data.subjectId}
+                        lecturerId={this.state.teacherId}
+                        unAssign={() => {this.unAssignTeacher(this.state.teacherId, data.sectionId, data.subjectId)}}
                       />
                     )
                   })

@@ -40,6 +40,15 @@ class AdminViewSections extends Component{
     
   }
 
+  removeSection = async (sectionId) => {
+    try {
+      await admin.removeSection(sectionId,this.state.token)
+      this.getSectionList()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   componentDidMount(){
     if(this.state.adminId === null || this.state.adminId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
       this.setState({
@@ -94,7 +103,7 @@ class AdminViewSections extends Component{
                         section={data.section}
                         students={data.students}
                         lecturers={data.totalLecturers}
-                        
+                        remove={()=>{this.removeSection(data.sectionId)}}
                       />
                     )
                   })
