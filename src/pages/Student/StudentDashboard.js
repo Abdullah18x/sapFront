@@ -1,8 +1,76 @@
-import React, {Component} from 'react';
+import React, { Component} from 'react';
+import { Link } from "@reach/router";
+const ls = require('local-storage')
+const auth = require('../../axios/auth')
+const student = require('../../axios/student')
 
-export default props =>(
-            <div className="page-container">
+class StudentDashboard extends Component{
+    state={
+    studentId: ls.get('studentId'),
+    userType: ls.get('userType'),
+    token: ls.get('token'),
+    name:'',
+    rollNo:'',
+    loggedIn: true
+    }
+
+    verification = async () => {
+    let verifyToken = await auth.verifyToken(this.state.studentId,this.state.userType,this.state.token)
+    if(verifyToken.length === 0 ){
+        this.setState({
+        loggedIn:false
+        })
+    }else{
+        if(verifyToken.expired === 1){
+        this.setState({
+            loggedIn:false
+        })
+        }
+    }
+    }
+
+    getStudent = async () =>{
+        try {
+            let returnedStudent = await student.getStudent(this.state.studentId, this.state.token)
+            console.log(returnedStudent)
+            this.setState({
+                name:returnedStudent[0].name,
+                rollNo:returnedStudent[0].rollNo
+            })
+        } catch (error) {
+            
+        }
+    }
+
+    componentDidMount(){
+    if(this.state.studentId === null || this.state.studentId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
+        this.setState({
+        loggedIn:false
+        })
+        window.location.href='/error'
+    }else{
+        this.verification()
+    }
+    if(this.state.loggedIn){
+        this.getStudent()
+    }
+    
+    }
+
+    isLoggedIn = () => {
+    
+    if(this.state.loggedIn){
+        return (
+        <div>
                 <div className="main-content">
+                    <div className="page-header">
+                    <div className="header-sub-title">
+                        <nav className="breadcrumb breadcrumb-dash">
+                        <a href="#" className="breadcrumb-item"><i className="anticon anticon-home m-r-5" />Home</a>
+                        <span className="breadcrumb-item active">Dashboard</span>
+                        </nav>
+                    </div>
+                    </div>
                     <div className="page-header no-gutters">
                     <div className="d-md-flex align-items-md-center justify-content-between">
                         <div className="media m-v-10 align-items-center">
@@ -10,20 +78,12 @@ export default props =>(
                             <img src="../assets/images/avatars/thumb.jpg" alt="" />
                         </div>
                         <div className="media-body m-l-15">
-                            <h4 className="m-b-0">Welcome back, Zain!</h4>
-                            <span className="text-gray">FA17-BSE-016</span>
+                            <h4 className="m-b-0">Welcome back, {this.state.name}!</h4>
+                            <span className="text-gray">{this.state.rollNo}</span>
                         </div>
                         </div>
                         <div className="d-md-flex align-items-center d-none">
-                        <div className="media align-items-center m-r-40 m-v-5">
-                            <div className="font-size-27">
-                            <i className="text-primary anticon anticon-profile" />
-                            </div>
-                            <div className="d-flex align-items-center m-l-10">
-                            <h2 className="m-b-0 m-r-5">8</h2>
-                            <span className="text-gray">Tasks Due</span>
-                            </div>
-                        </div>
+                        
                         <div className="media align-items-center m-r-40 m-v-5">
                             <div className="font-size-27">
                             <i className="text-success  anticon anticon-appstore" />
@@ -693,6 +753,7 @@ export default props =>(
                         </div>
                     </div>
                     </div>
+
                 </div>
                 <footer className="footer">
                     <div className="footer-content">
@@ -701,7 +762,24 @@ export default props =>(
                     </span>
                     </div>
                 </footer>
-                </div>
-
+                
+            {this.props.children}
+            </div>
         )
+    }else{
+    window.location.href='/error'
+    }
+}
+    
+
+    render(){
+    return(
+        <div className="page-container">
+        {this.isLoggedIn()}
+</div>
+    )
+    }
+}
+
+export default StudentDashboard
   

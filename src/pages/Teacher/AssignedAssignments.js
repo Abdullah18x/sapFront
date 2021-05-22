@@ -4,7 +4,7 @@ import React, { Component} from 'react';
     const auth = require('../../axios/auth')
     const lecturer = require('../../axios/lecturer')
     
-    class TeacherAssignments extends Component{
+    class TeacherAssignedAssignments extends Component{
       state={
         lecturerId: ls.get('teacherId'),
         userType: ls.get('userType'),
@@ -30,7 +30,8 @@ import React, { Component} from 'react';
 
       setAssignments = async () => {
         try {
-          let returnedAssignments = await lecturer.getAssignments(this.state.lecturerId, this.state.token)
+          let returnedAssignments = await lecturer.getAssignedAssignments(this.state.lecturerId, this.state.token)
+          console.log(returnedAssignments)
           this.setState({
             assignments:returnedAssignments
           })
@@ -39,13 +40,19 @@ import React, { Component} from 'react';
         }
       }
 
-      delete = async (assignmentId) =>{
+      deleteAssigned = async (assignmentId,assignedId) =>{
         try {
-          let deleteAssignment = await lecturer.deleteAssignment(assignmentId, this.state.token)
+          console.log(assignedId)
+          let deleteAssignment = await lecturer.deleteAssignedAssignment(assignmentId,assignedId, this.state.token)
           this.setAssignments()
         } catch (error) {
           console.log(error)
         }
+      }
+
+      formatDate = (date) =>{
+        let format = date.replace('T', ' ').replace('.000Z','')
+        return format
       }
     
       componentDidMount(){
@@ -74,21 +81,24 @@ import React, { Component} from 'react';
                             <nav className="breadcrumb breadcrumb-dash">
                             <a href="#" className="breadcrumb-item"><i className="anticon anticon-home m-r-5" />Home</a>
                             <a className="breadcrumb-item" href="#">Sections</a>
-                            <span className="breadcrumb-item active">View All Assignments</span>
+                            <span className="breadcrumb-item active">View All Assigned Assignments</span>
                             </nav>
                         </div>
                 <div className="container-fluid">
                   <div className="card" id="list-view">
                     <div className="card-body">
-                    <h4>View All Assignments</h4>
+                    <h4>View All Assigned Assignments</h4>
                       <div className="table-responsive">
                         <table className="table">
                           <thead>
                             <tr>
                               <th>ID</th>
                               <th>Title</th>
+                              <th>Section</th>
+                              <th>Subject</th>
+                              <th>Assigned</th>
+                              <th>Due</th>
                               <th>Total Marks</th>
-                              <th>Status</th>
                               <th>Action</th>
                               
                             </tr>
@@ -100,8 +110,11 @@ import React, { Component} from 'react';
                                 <tr key={index}>
                                   <td>{data.assignmentId}</td>
                                   <td>{data.title}</td>
+                                  <td>{data.section}</td>
+                                  <td>{data.subject}</td>
+                                  <td>{this.formatDate(data.assigned)}</td>
+                                  <td>{this.formatDate(data.due)}</td>
                                   <td>{data.totalMarks}</td>
-                                  <td>{data.status}</td>
                                   <td>
                                     <div className="dropdown dropdown-animated scale-left">
                                         <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
@@ -110,28 +123,22 @@ import React, { Component} from 'react';
                                         <div className="dropdown-menu">
                                         <Link 
                                             className="dropdown-item"
-                                            to='/teacher/viewAssignment'
+                                            to='/teacher/viewAssignedAssignment'
                                             state={{
+                                              assignedId:data.assignedId,
                                                 assignmentId:data.assignmentId
                                             }}
                                             >
                                             <i className="anticon anticon-eye" />
                                             <span className="m-l-10">View Assignment</span>
                                         </Link>
-                                        
-                                        <Link 
-                                            className="dropdown-item"
-                                            to='/teacher/updateAssignment'
-                                            state={{
-                                              assignmentId:data.assignmentId
-                                            }}
-                                            >
-                                            <i className="anticon anticon-eye" />
-                                            <span className="m-l-10">Update</span>
-                                        </Link>
-                                        <button onClick={() => {this.delete(data.assignmentId)}} className="dropdown-item" type="button">
+                                        <button onClick={() => {this.editDueDate(data.assignmentId)}} className="dropdown-item" type="button">
                                           <i className="anticon anticon-delete" />
-                                          <span className="m-l-10">Delete</span>
+                                          <span className="m-l-10">Edit Due Date</span>
+                                        </button>
+                                        <button onClick={() => {this.deleteAssigned(data.assignmentId,data.assignedId)}} className="dropdown-item" type="button">
+                                          <i className="anticon anticon-delete" />
+                                          <span className="m-l-10">Un-Assign</span>
                                         </button>
                                         
                                         </div>
@@ -226,4 +233,4 @@ import React, { Component} from 'react';
       }
     }
     
-    export default TeacherAssignments
+    export default TeacherAssignedAssignments

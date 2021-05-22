@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import NavLink from './../pages/NavLink.js';
-import '../ide.css';
+// import '../ide.css';
 import Script from 'react-load-script';
 
 

@@ -6,7 +6,7 @@ const auth = require('../../axios/auth')
 const lecturer = require('../../axios/lecturer')
 
 
-    class TeacherAddAssignments extends Component{
+    class UpdateAssignment extends Component{
       state={
         lecturerId: ls.get('teacherId'),
         userType: ls.get('userType'),
@@ -21,6 +21,7 @@ const lecturer = require('../../axios/lecturer')
         subject:0,
         resourceMaterial:'',
         fileName:'Choose File',
+        tempFileName:'',
         details:'',
         resourceLinks:'',
         solution:'',
@@ -152,56 +153,94 @@ const lecturer = require('../../axios/lecturer')
         }
       }
 
-      assignRightNow(e){
-        if(e.target.checked){
-          document.getElementById('assignNowRow').style.removeProperty('display')
-          document.getElementById('assignAssignment').style.removeProperty('display')
-          document.getElementById('saveAssignment').style.display = 'none'
-        }else{
-          document.getElementById('assignNowRow').style.display = 'none'
-          document.getElementById('assignAssignment').style.display = 'none'
-          document.getElementById('saveAssignment').style.removeProperty('display')
-        }
-      }
+    //   assignRightNow(e){
+    //     if(e.target.checked){
+    //       document.getElementById('assignNowRow').style.removeProperty('display')
+    //       document.getElementById('assignAssignment').style.removeProperty('display')
+    //       document.getElementById('saveAssignment').style.display = 'none'
+    //     }else{
+    //       document.getElementById('assignNowRow').style.display = 'none'
+    //       document.getElementById('assignAssignment').style.display = 'none'
+    //       document.getElementById('saveAssignment').style.removeProperty('display')
+    //     }
+    //   }
 
-      assignAssignment = async () => {
+      getAssignment = async () => {
         try {
-          if(this.state.title==='' || this.state.dueDate==='' || this.state.dueTime==='' || this.state.section===0 || this.state.subject===0 || this.state.resourceMaterial==='' || this.state.details==='' || this.state.resourceLinks==='' || this.state.solution===''){
-            alert('please fill out the entire form')
-            return
-          }
-          
-          await this.saveAssignment()
-          let dueDate = this.state.dueDate.concat(' '.concat(this.state.dueTime))
-          let returnedAssignmentId = await lecturer.getLatestAssignmentId(this.state.lecturerId, this.state.token)
-          if (!returnedAssignmentId[0].title.localeCompare(this.state.title)) {
-            let assignmentId = returnedAssignmentId[0].assignmentId
-            let assignAssignment = await lecturer.assignAssignment(assignmentId,this.state.section,this.state.subject,dueDate,this.state.token)
-            let changStatus = await lecturer.changeAssignmentStatus(assignmentId,1,this.state.token)
-          }else{
-            alert('error in saving assignment')
-          }
-          
+            let assignmentId = this.props.location.state.assignmentId
+            let returnedAssignment = await lecturer.getAssignment(assignmentId, this.state.token)
+            
+            let links = returnedAssignment[0].resourceLinks.replace(/[\r\n]+/g," ")
+            // let links = removedNewLines.split(' ')
+            
+            this.setState({
+                title:returnedAssignment[0].title,
+                details:returnedAssignment[0].details,
+                resourceLinks:links,
+                fileName:returnedAssignment[0].resourceMaterial,
+                tempFileName:returnedAssignment[0].resourceMaterial,
+                totalMarks:returnedAssignment[0].totalMarks,
+                solution:returnedAssignment[0].solution
+            })
         } catch (error) {
-          console.log(error)
+            
         }
-      }
+    }
 
-      saveAssignment = async () => {
+    //   assignAssignment = async () => {
+    //     try {
+    //       if(this.state.title==='' || this.state.dueDate==='' || this.state.dueTime==='' || this.state.section===0 || this.state.subject===0 || this.state.resourceMaterial==='' || this.state.details==='' || this.state.resourceLinks==='' || this.state.solution===''){
+    //         alert('please fill out the entire form')
+    //         return
+    //       }
+          
+    //       await this.saveAssignment()
+    //       let dueDate = this.state.dueDate.concat(' '.concat(this.state.dueTime))
+    //       let returnedAssignmentId = await lecturer.getLatestAssignmentId(this.state.lecturerId, this.state.token)
+    //       let assignmentId = returnedAssignmentId[0].assignmentId
+    //       let assignAssignment = await lecturer.assignAssignment(assignmentId,this.state.section,this.state.subject,dueDate,this.state.token)
+    //       let changStatus = await lecturer.changeAssignmentStatus(assignmentId,1,this.state.token)
+    //     } catch (error) {
+    //       console.log(error)
+    //     }
+    //   }
+
+      updateAssignment = async () => {
         try {
-          var data = new FormData()
-          if(this.state.title==='' || !this.state.fileName.localeCompare('Choose File') || this.state.details==='' || this.state.resourceLinks==='' || this.state.solution===''){
+          
+          if(this.state.title==='' ){
             alert('please fill out the entire form')
             return
           }
-          data.append('lecturerId',this.state.lecturerId)
-          data.append('title', this.state.title)
-          data.append('totalMarks', this.state.totalMarks)
-          data.append('resourceMaterial',this.state.resourceMaterial)
-          data.append('details',this.state.details)
-          data.append('resourceLinks',this.state.resourceLinks)
-          data.append('solution',this.state.solution)
-          let uploaded = await lecturer.saveAssignment(data,this.state.token)
+          if (!this.state.tempFileName.localeCompare(this.state.fileName)) {
+              let data = {
+                assignmentId:this.props.location.state.assignmentId,
+                lecturerId:this.state.lecturerId,
+                title:this.state.title,
+                totalMarks:this.state.totalMarks,
+                details:this.state.details,
+                resourceLinks:this.state.resourceLinks,
+                solution:this.state.solution
+
+
+              }
+            let uploaded = await lecturer.updateAssignmentWOF(data,this.state.token)
+          }else{
+              console.log('here')
+            var data = new FormData()
+            data.append('assignmentId',this.props.location.state.assignmentId)
+            data.append('lecturerId',this.state.lecturerId)
+            data.append('title', this.state.title)
+            data.append('totalMarks', this.state.totalMarks)
+            data.append('resourceMaterial',this.state.resourceMaterial)
+            data.append('details',this.state.details)
+            data.append('resourceLinks',this.state.resourceLinks)
+            data.append('solution',this.state.solution)
+            let uploaded = await lecturer.updateAssignmentWF(data,this.state.token)
+          }
+
+          
+        //   let uploaded = await lecturer.saveAssignment(data,this.state.token)
         } catch (error) {
           console.log(error)
         }
@@ -217,8 +256,7 @@ const lecturer = require('../../axios/lecturer')
           this.verification()
         }
         if(this.state.loggedIn){
-          this.getSections()
-          this.setStatus()
+            this.getAssignment()
         }
         
       }
@@ -239,22 +277,22 @@ const lecturer = require('../../axios/lecturer')
                         </div>
                         <div className="card">
                           <div className="card-body">
-                            <h4>Add New Assignment</h4>
+                            <h4>Update Assignment: {this.state.title}</h4>
                             <div className="m-t-25">
                               <form>
                                 <div className="form-row">
                                   <div className="form-group col-md-6">
                                     <label htmlFor="assignmentTitle">Assignment Title</label>
-                                    <input type="text" className="form-control" id="assignmentTitle" placeholder="Title" onChange={(e)=>{this.setitle(e)}}/>
+                                    <input type="text" className="form-control" id="assignmentTitle" placeholder="Title" onChange={(e)=>{this.setitle(e)}} value={this.state.title}/>
                                   </div>
                                   <div className="form-group col-md-6">
                                     <label htmlFor="totalMarks">Total Marks</label>
-                                    <input type="number" className="form-control" id="totalMarks" placeholder="Marks" onChange={(e)=>{this.setTotalMarks(e)}}/>
+                                    <input type="number" className="form-control" id="totalMarks" placeholder="Marks" onChange={(e)=>{this.setTotalMarks(e)}} value={this.state.totalMarks}/>
                                   </div>
                                 </div>
-                                <div className="form-row">
+                                {/* <div className="form-row">
                                   <div className="checkbox m-b-20">
-                                    <input id="assignRightNow" type="checkbox" onChange={(e)=>{this.assignRightNow(e)}} disabled/>
+                                    <input id="assignRightNow" type="checkbox" onChange={(e)=>{this.assignRightNow(e)}} />
                                     <label htmlFor="assignRightNow">Assign Right Now</label>
                                   </div>
                                 </div>
@@ -291,30 +329,30 @@ const lecturer = require('../../axios/lecturer')
                                       </select>
                                   </div>
                                   
-                                </div>
+                                </div> */}
                                 <div className="form-group">
                                 <label>Resource Material</label>
                                   <div className="custom-file">
-                                    <input type="file" className="custom-file-input" id="customFile" onChange={this.setResourceMaterial}/>
+                                    <input type="file" className="custom-file-input" id="customFile" onChange={this.setResourceMaterial} />
                                     <label className="custom-file-label" htmlFor="customFile">{this.state.fileName}</label>
                                   </div>
                                 </div>
                                 <div className="form-row">
                                   <div className="form-group col-md-12">
                                     <label htmlFor="inputEmail4">Details</label>
-                                    <textarea className="form-control" id="input5" placeholder="Details" onChange={(e)=>{this.setDetails(e)}}></textarea>
+                                    <textarea className="form-control" id="input5" placeholder="Details" onChange={(e)=>{this.setDetails(e)}} value={this.state.details}></textarea>
                                   </div>
                                 </div>
                                 <div className="form-row">
                                   <div className="form-group col-md-12">
                                     <label htmlFor="inputEmail4">Resource Links ~ Please give space bewteen links or enter each one in a new line</label>
-                                    <textarea className="form-control" id="input5" placeholder="Helping Links" onChange={(e)=>{this.setResourceLinks(e)}}></textarea>
+                                    <textarea className="form-control" id="input5" placeholder="Helping Links" onChange={(e)=>{this.setResourceLinks(e)}} value={this.state.resourceLinks}></textarea>
                                   </div>
                                 </div>
                                 <div className="form-row">
                                   <div className="form-group col-md-12">
                                     <label htmlFor="solution">Solution</label>
-                                    <textarea className="form-control" id="solution" placeholder="Result" onChange={(e)=>{this.setSolution(e)}}></textarea>
+                                    <textarea className="form-control" id="solution" placeholder="Result" onChange={(e)=>{this.setSolution(e)}} value={this.state.solution}></textarea>
                                   </div>
                                 </div>
                                 {/* <div className="form-group">
@@ -328,7 +366,7 @@ const lecturer = require('../../axios/lecturer')
                                 </div> */}
                                 <div className="form-row">
                                   <button id="assignAssignment" type="button" className="btn btn-primary" onClick={this.assignAssignment} style={{marginRight:'10px',display:'none'}} >Assign</button>
-                                  <button id="saveAssignment" type="button" className="btn btn-primary" onClick={this.saveAssignment} >Save</button>
+                                  <button id="saveAssignment" type="button" className="btn btn-primary" onClick={this.updateAssignment} >Update</button>
                                 </div>
                                
                               </form>
@@ -356,4 +394,4 @@ const lecturer = require('../../axios/lecturer')
       }
     }
     
-    export default TeacherAddAssignments
+    export default UpdateAssignment

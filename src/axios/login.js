@@ -32,9 +32,26 @@ let teacherLogin = async (userName, password) =>{
     }
 }
 
+let studentLogin = async (userName, password) =>{
+  try {
+      const response = await axios.post('http://localhost:3000/student/login',
+      {
+        userName: userName, 
+        password: password
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log('It failed')
+      console.log(error)
+      return error
+    }
+}
+
 
 
 export {
   adminLogin,
-  teacherLogin
+  teacherLogin,
+  studentLogin
 }

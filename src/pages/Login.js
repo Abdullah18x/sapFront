@@ -52,7 +52,13 @@ class Login extends Component {
             window.location.href='/teacher'
 
         }else if(this.state.userType === "student"){
-
+            let response = await requestInfo.studentLogin(this.state.userName, this.state.password)
+            var jsObject = JSON.parse(JSON.stringify(response))
+            ls.clear()
+            ls('studentId',jsObject.studentId)
+            ls('userType',3)
+            ls('token', jsObject.token)
+            window.location.href='/student'
         }
     }
     render() {

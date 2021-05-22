@@ -1,6 +1,22 @@
 import React, {Component} from 'react';
 import NavLink from './../pages/NavLink.js';
-export default props => (
+const logout = require('../axios/logout')
+const ls = require('local-storage')
+
+class StudentHeader extends Component {
+
+    logout = async () => {
+        let userId = ls('studentId')
+        let userType = ls('userType')
+        let token = ls.get('token')
+        let response = await logout.logOutStudent(userId,userType,token)
+        ls.clear()
+        console.log(response)
+        window.location.href='/'
+
+    }
+    render(){
+        return (
             <div className="app">
                 <div className="layout is-side-nav-dark">
                     <div className="header">
@@ -144,7 +160,7 @@ export default props => (
                                                 <i className="anticon font-size-10 anticon-right" />
                                             </div>
                                         </a>
-                                        <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
+                                        <button type='button' onClick={this.logout} className="dropdown-item d-block p-h-15 p-v-10">
                                             <div className="d-flex align-items-center justify-content-between">
                                                 <div>
                                                     <i className="anticon opacity-04 font-size-16 anticon-logout" />
@@ -152,7 +168,7 @@ export default props => (
                                                 </div>
                                                 <i className="anticon font-size-10 anticon-right" />
                                             </div>
-                                        </a>
+                                        </button>
                                     </div>
                                 </li>
                             </ul>
@@ -167,17 +183,6 @@ export default props => (
                                     <i className="anticon anticon-dashboard" />
                                 </span>
                                 <span className="title">Dashboard</span>
-                                <span className="arrow">
-                                    <i className="arrow-icon" />
-                                </span>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <NavLink className="dropdown-toggle" to="/student/chat">
-                                <span className="icon-holder">
-                                    <i className="anticon anticon-message" />
-                                </span>
-                                <span className="title">Chat</span>
                                 <span className="arrow">
                                     <i className="arrow-icon" />
                                 </span>
@@ -210,23 +215,24 @@ export default props => (
                                 <span className="icon-holder">
                                     <i className="anticon anticon-bars" />
                                 </span>
-                                <span className="title">Single Assignment</span>
+                                <span className="title">Graded Assignments</span>
                                 <span className="arrow">
                                     <i className="arrow-icon" />
                                 </span>
                             </NavLink>
                         </li>
                         <li className="nav-item dropdown">
-                            <NavLink className="dropdown-toggle" to="/ide">
+                            <NavLink className="dropdown-toggle" to="/student/view-assignment">
                                 <span className="icon-holder">
-                                    <i className="anticon anticon-code" />
+                                    <i className="anticon anticon-bars" />
                                 </span>
-                                <span className="title">IDE</span>
+                                <span className="title">Registeration</span>
                                 <span className="arrow">
                                     <i className="arrow-icon" />
                                 </span>
                             </NavLink>
                         </li>
+                        
                         <li className="nav-item dropdown">
                             <NavLink className="dropdown-toggle" to="/student/profile">
                                 <span className="icon-holder">
@@ -253,9 +259,12 @@ export default props => (
                 </div>
             </div>
                 </div>
-                {props.children}
+                {this.props.children}
             </div>
             
 
         )
-   
+    }
+} 
+
+export default StudentHeader

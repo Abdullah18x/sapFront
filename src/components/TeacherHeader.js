@@ -6,9 +6,10 @@ const ls = require('local-storage')
 class TeacherHeader extends Component {
 
     logout = async () => {
-        let userId = ls('adminId')
+        let userId = ls('teacherId')
         let userType = ls('userType')
-        let response = await logout.logOut(userId,userType)
+        let token = ls.get('token')
+        let response = await logout.logOutTeacher(userId,userType,token)
         ls.clear()
         console.log(response)
         window.location.href='/'
@@ -187,7 +188,7 @@ class TeacherHeader extends Component {
                                     </span>
                                 </NavLink>
                             </li>
-                            <li className="nav-item dropdown">
+                            {/* <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/chat">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-message" />
@@ -197,7 +198,7 @@ class TeacherHeader extends Component {
                                         <i className="arrow-icon" />
                                     </span>
                                 </NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/mail">
                                     <span className="icon-holder">
@@ -221,11 +222,11 @@ class TeacherHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink className="dropdown-toggle" to="/teacher/add-student">
+                                <NavLink className="dropdown-toggle" to="/teacher/pendingRequests">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />
                                     </span>
-                                    <span className="title">Add Students</span>
+                                    <span className="title">View Pending Requests</span>
                                     <span className="arrow">
                                         <i className="arrow-icon" />
                                     </span>
@@ -254,6 +255,17 @@ class TeacherHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/teacher/assignedAssignments">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-bars" />
+                                    </span>
+                                    <span className="title">Assigned Assignments</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/submissions">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-bars" />
@@ -264,7 +276,7 @@ class TeacherHeader extends Component {
                                     </span>
                                 </NavLink>
                             </li>
-                            <li className="nav-item dropdown">
+                            {/* <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/preview">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-bars" />
@@ -274,7 +286,7 @@ class TeacherHeader extends Component {
                                         <i className="arrow-icon" />
                                     </span>
                                 </NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/profile">
                                     <span className="icon-holder">

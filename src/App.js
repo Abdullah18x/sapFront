@@ -15,6 +15,7 @@ import StudentMail from './pages/Student/StudentMail.js';
 import StudentAllAssignments from './pages/Student/StudentAllAssignments.js';
 import StudentViewAssignments from './pages/Student/StudentViewAssignments.js';
 import StudentProfile from './pages/Student/StudentProfile.js';
+import ViewAssignmentStd from './pages/Student/ViewAssignment'
 import IDE from './pages/IDE.js';
 
 import AdminDashboard from './pages/Admin/AdminDashboard.js';
@@ -41,7 +42,12 @@ import TeacherViewStudents from './pages/Teacher/TeacherViewStudents.js';
 import TeacherSubmittedAssignments from './pages/Teacher/TeacherSubmittedAssignments.js';
 import TeacherChat from './pages/Teacher/TeacherChat.js';
 import TeacherMail from './pages/Teacher/TeacherMail.js';
+import ViewAssignment from './pages/Teacher/ViewAssignment'
+import UpdateAssignment from './pages/Teacher/UpdateAssignment'
+import TeacherAssignedAssignments from './pages/Teacher/AssignedAssignments'
+import ViewAssignedAssignment from './pages/Teacher/ViewAssignedAssignment'
 import ErrorPage from './pages/error.js'
+import StudentSubmission from './pages/Teacher/StudentSubmission'
 
 import Settings from './pages/Settings.js';
 import Search from './components/Search.js';
@@ -61,6 +67,7 @@ function App() {
         <StudentAllAssignments path="/assignments" />
         <StudentViewAssignments path="/view-assignment" />
         <StudentProfile path="/profile" />
+        <ViewAssignmentStd path="/viewAssignment"/>
         <Settings path="/settings" />
       </StudentHeader>
       
@@ -92,6 +99,11 @@ function App() {
         <TeacherViewStudents path="/students"/>
         <TeacherChat path="/chat"/>
         <TeacherMail path="/mail"/>
+        <ViewAssignment path="/viewAssignment"/>
+        <UpdateAssignment path="/updateAssignment"/>
+        <TeacherAssignedAssignments path="/assignedAssignments"/>
+        <ViewAssignedAssignment path='/viewAssignedAssignment'/>
+        <StudentSubmission path='/studentSubmission'/>
         <Settings path="/settings"/>
       </TeacherHeader>
     </Router>

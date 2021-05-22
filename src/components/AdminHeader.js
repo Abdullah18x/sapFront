@@ -8,7 +8,8 @@ class AdminHeader extends Component {
     logout = async () => {
         let userId = ls('adminId')
         let userType = ls('userType')
-        let response = await logout.logOut(userId,userType)
+        let token = ls.get('token')
+        let response = await logout.logOutAdmin(userId,userType,token)
         ls.clear()
         console.log(response)
         window.location.href='/'
