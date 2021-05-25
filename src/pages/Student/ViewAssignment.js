@@ -15,7 +15,7 @@ class ViewAssignment extends Component{
     attachment:'',
     resourceMaterial:'',
     totalMarks:0,
-    solution:'',
+    solution:'Solve Assignment to show your solution here',
     loggedIn: true
   }
 
@@ -55,8 +55,7 @@ class ViewAssignment extends Component{
               describe:returnedAssignment[0].details,
               links:links,
               resourceMaterial:returnedAssignment[0].resourceMaterial,
-              totalMarks:returnedAssignment[0].totalMarks,
-              solution:returnedAssignment[0].solution
+              totalMarks:returnedAssignment[0].totalMarks
           })
       } catch (error) {
           
@@ -64,10 +63,25 @@ class ViewAssignment extends Component{
   }
 
   openIde = () => {
-    const url = `http://localhost:5500/?studentId=${this.state.studentId}&assignmentId=${this.props.location.state.assignmentId}&assignedId=${this.props.location.state.assignedId}&ide=${this.state.token}`;
+    const url = `http://localhost:5500/?studentId=${this.state.studentId}&assignmentId=${this.props.location.state.assignmentId}&assignmentType=${this.props.location.state.assignmentType}&assignedId=${this.props.location.state.assignedId}&ide=${this.state.token}`;
     window.open(url, '_blank');
    
   }
+
+  gettingSolution = async () => {
+    try {
+      let submittedAssignment = await student.getStudentSubmissionS(this.props.location.state.assignedId,this.state.studentId, this.state.token)
+      console.log(submittedAssignment)
+      if (submittedAssignment.length > 0) {
+        this.setState({
+          solution: submittedAssignment[0].solution
+        })
+      }
+    } catch (error) {
+      
+    }
+  }
+  
 
   componentDidMount(){
     if(this.state.studentId === null || this.state.studentId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
@@ -80,6 +94,7 @@ class ViewAssignment extends Component{
     }
     if(this.state.loggedIn){
         this.getAssignment()
+        this.gettingSolution()
     }
     
   }

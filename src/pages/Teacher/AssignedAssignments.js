@@ -78,12 +78,12 @@ import React, { Component} from 'react';
               <div className="main-content">
               <div className="page-header">
               <div className="header-sub-title">
-                            <nav className="breadcrumb breadcrumb-dash">
-                            <a href="#" className="breadcrumb-item"><i className="anticon anticon-home m-r-5" />Home</a>
-                            <a className="breadcrumb-item" href="#">Sections</a>
-                            <span className="breadcrumb-item active">View All Assigned Assignments</span>
-                            </nav>
-                        </div>
+                <nav className="breadcrumb breadcrumb-dash">
+                <a href="#" className="breadcrumb-item"><i className="anticon anticon-home m-r-5" />Home</a>
+                <a className="breadcrumb-item" href="#">Sections</a>
+                <span className="breadcrumb-item active">View All Assigned Assignments</span>
+                </nav>
+            </div>
                 <div className="container-fluid">
                   <div className="card" id="list-view">
                     <div className="card-body">

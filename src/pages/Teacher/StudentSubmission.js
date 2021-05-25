@@ -20,6 +20,9 @@ class StudentSubmission extends Component{
     marksObtained:0,
     name:'',
     rollNo:'',
+    timeTaken:0,
+    noOfErrors:0,
+    errors:[],
     submissionId:0,
     loggedIn: true
   }
@@ -90,12 +93,22 @@ class StudentSubmission extends Component{
             marksObtained:getStudentSolution[0].marksObtained,
             name:getStudentSolution[0].name,
             rollNo:getStudentSolution[0].rollNo,
-            submissionId:getStudentSolution[0].submissionId
+            submissionId:getStudentSolution[0].submissionId,
+            timeTaken:getStudentSolution[0].timeTaken,
+            noOfErrors:getStudentSolution[0].errorsNo,
+            errors:getStudentSolution[0].errorsList
           })
       } catch (error) {
           console.log(error)
       }
   }
+
+  // formatErrors = () =>{
+  //   let errorsList = this.state.errors
+  //   errorsList = errorsList.toString().replace('[','').slice(0,-1)
+    
+  //   return (<p>{errorsList}</p> )
+  // }
 
   componentDidMount(){
     if(this.state.lecturerId === null || this.state.lecturerId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
@@ -158,11 +171,14 @@ class StudentSubmission extends Component{
                   <ul className="nav nav-tabs">
                     
                     <li className="nav-item">
-                      <a className="nav-link active" data-toggle="tab" href="#project-details-attachment">Student Solution</a>
+                      <a className="nav-link active" data-toggle="tab" href="#studentSolutionTab">Student Solution</a>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" data-toggle="tab" href="#solutionTab">Solution</a>
                     </li>
+                    {/* <li className="nav-item">
+                      <a className="nav-link" data-toggle="tab" href="#errorTab">Errors ({this.state.noOfErrors-1})</a>
+                    </li> */}
                   </ul>
                   <div className="tab-content m-t-15 p-25">
                    
@@ -174,10 +190,19 @@ class StudentSubmission extends Component{
                     </div>
                     <div className="tab-pane fade show active" id="studentSolutionTab" role="tabpanel" aria-labelledby="links">
                       <h3>Student Solution:</h3>
+                      <p>Time Taken: {this.state.timeTaken} minutes</p>
+                      <p>Errors Occurred: {this.state.noOfErrors-1}</p>
                       <pre>{this.state.studentSolution}</pre>
                       
                       
                     </div>
+
+                    {/* <div className="tab-pane fade show" id="errorTab" role="tabpanel" aria-labelledby="links">
+                      <h3>Errors:</h3>
+                      <pre>{this.formatErrors()}</pre>
+                      
+                      
+                    </div> */}
                   </div>
                 </div>
               </div>

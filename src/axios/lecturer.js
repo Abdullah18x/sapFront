@@ -21,9 +21,48 @@ let getUser = async (userId, token) =>{
       }
 }
 
+let getStudent = async (lecturerId,studentId, token) =>{
+  try {
+      const response = await axios.post(`${url}/student/fetchStudent`,
+      {
+        lecturerId,lecturerId,
+        studentId: studentId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
 let getStudents = async (lecturerId, token) =>{
   try {
       const response = await axios.post(`${url}/student/fetchStudents`,
+      {
+          lecturerId: lecturerId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getLecturerAtRiskStudents = async (lecturerId, token) =>{
+  try {
+      const response = await axios.post(`${url}/student/getLecturerAtRiskStudents`,
       {
           lecturerId: lecturerId
       },{
@@ -213,10 +252,10 @@ let getAssignment = async (assignmentId, token) =>{
     }
 }
 
-let getAssignedAssignment = async (assignmentId, token) =>{
+let getAssignedAssignment = async (assignedId, token) =>{
   try {
       const response = await axios.post(`${url}/assignment/getAssignedAssignment`,{
-        assignmentId:assignmentId
+        assignedId:assignedId
       },{
         headers:{
           Authorization: token
@@ -338,6 +377,24 @@ let deleteAssignedAssignment = async (assignmentId,assignedId,token) => {
   }
 }
 
+let removeStudentFromSection = async (studentId,token) => {
+  try {
+    await axios.delete(`${url}/student/removeStudentFromSection`, {
+      headers: {
+        Authorization: token
+      },
+      data: {
+        studentId:studentId
+      }
+    });
+    
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
 let getSubmittedAssignments = async (assignedId, token) =>{
   try {
       const response = await axios.post(`${url}/assignment/getSubmittedAssignments`,{
@@ -377,6 +434,43 @@ let getStudentSubmission = async (studentId,assignedId, token) =>{
       const response = await axios.post(`${url}/assignment/getStudentSubmission`,{
         studentId:studentId,
         assignedId:assignedId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getRecentSubmissions = async (lecturerId, token) =>{
+  try {
+      const response = await axios.post(`${url}/assignment/getRecentSubmissions`,{
+        lecturerId:lecturerId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getRecentSTDSubmissions = async (lecturerId,studentId, token) =>{
+  try {
+      const response = await axios.post(`${url}/assignment/getRecentSTDSubmissions`,{
+        lecturerId:lecturerId,
+        studentId:studentId
       },{
         headers:{
           Authorization: token
@@ -432,7 +526,9 @@ let deleteStudentSubmission = async (submissionId,token) => {
 
 export {
   getUser,
+  getStudent,
   getStudents,
+  getLecturerAtRiskStudents,
   getLecturerSectionList,
   getSectionSubejct,
   getStatus,
@@ -452,6 +548,9 @@ export {
   getSubmittedAssignments,
   getPendingStudents,
   getStudentSubmission,
+  getRecentSubmissions,
   gradeAssignment,
-  deleteStudentSubmission
+  deleteStudentSubmission,
+  removeStudentFromSection,
+  getRecentSTDSubmissions
 }

@@ -56,8 +56,28 @@ let getAssignments = async (studentId, token) =>{
       }
   }
 
+  let getStudentSubmissionS = async (assignedId,studentId, token) =>{
+    try {
+        const response = await axios.post(`${url}/assignment/getStudentSubmissionS`,{
+          assignedId: assignedId,
+          studentId: studentId
+        },{
+          headers:{
+            Authorization: token
+          }
+        }
+        );
+        return response.data
+      } catch (error) {
+        console.log(error)
+        return error
+        
+      }
+  }
+
   export{
     getStudent,
     getAssignments,
-    getAssignment
+    getAssignment,
+    getStudentSubmissionS
   }

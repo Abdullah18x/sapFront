@@ -126,7 +126,8 @@ class StudentAllAssignments extends Component{
                                         to='/student/viewAssignment'
                                         state={{
                                             assignmentId:data.assignmentId,
-                                            assignedId:data.assignedId
+                                            assignedId:data.assignedId,
+                                            assignmentType:data.assignmentType
                                         }}
                                         >
                                         <i className="anticon anticon-eye" />

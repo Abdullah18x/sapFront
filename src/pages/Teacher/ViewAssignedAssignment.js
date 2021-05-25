@@ -16,6 +16,7 @@ class ViewAssignedAssignment extends Component{
     resourceMaterial:'',
     totalMarks:0,
     solution:'',
+    dueDate:'',
     submissions:0,
     submittedAssignments:[],
     nonSubmissions:0,
@@ -108,6 +109,63 @@ deleteSubmission = async (submissionId) =>{
     let format = date.replace('T', ' ').replace('.000Z','')
     return format
   }
+  seperateDateValues = (date) => {
+    date = date.replace(/-/g, ' ').replace(/:/g, ' ')
+    let a = date.split(' ')
+    return a
+  }
+
+  getAssignedAssignment = async () => {
+    try {
+      let returnedAssignment = await lecturer.getAssignedAssignment(this.props.location.state.assignedId, this.state.token)
+      console.log(returnedAssignment)
+      let dueDate = this.formatDate(returnedAssignment[0].due)
+      this.setState({
+        dueDate:dueDate
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  checkIfLateSubmission = (date) => {
+    let submissionDate = this.seperateDateValues(date)
+    let dueDate = this.seperateDateValues(this.state.dueDate)
+    console.log(date)
+    console.log(this.state.dueDate)
+    let b = 1
+    for (let i = 1; i < 5; i++) {
+      if (dueDate[i] > submissionDate[i]) {
+        b = 0
+        break
+      }else if (dueDate[i] === submissionDate[i]) {
+        b = 0
+      }
+      else{
+        b = 1
+        break
+      }
+      
+    }
+
+    return b
+    // if (dueDate[1] >= submissionDate[1]) {
+    //   if (dueDate[2] >= submissionDate[2]) {
+    //     if (dueDate[3] >= submissionDate[3]) {
+    //       if (dueDate[4] >= submissionDate[4]) {
+        
+    //       }else{
+    //         return 1
+    //       }
+    //     }else{
+    //       return 1
+    //     }
+    //   }else{
+    //     return 1
+    //   }
+    // }else{
+    //   return 1
+    // }
+  }
 
   componentDidMount(){
     if(this.state.lecturerId === null || this.state.lecturerId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
@@ -120,6 +178,7 @@ deleteSubmission = async (submissionId) =>{
     }
     if(this.state.loggedIn){
         this.getAssignment()
+        this.getAssignedAssignment()
         this.getSubmittedAssignments()
         this.getPendingStudents()
     }
@@ -207,10 +266,12 @@ deleteSubmission = async (submissionId) =>{
                           <tbody>
                               {
                                   this.state.submittedAssignments.map((data,index)=>{
-                                      let late = 'On Time'
+                                      let late = this.checkIfLateSubmission(this.formatDate(data.submittedAt))
                                       let marks = 'Unchecked'
-                                      if (data.late === 1) {
+                                      if (late === 1) {
                                           late = 'Late Submission'
+                                      }else{
+                                        late = 'On Time'
                                       }
                                       if (data.checked === 1) {
                                           marks = data.marksObtained

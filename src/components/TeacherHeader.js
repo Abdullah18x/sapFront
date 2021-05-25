@@ -237,6 +237,17 @@ class TeacherHeader extends Component {
                                     <span className="icon-holder">
                                         <i className="anticon anticon-bars" />
                                     </span>
+                                    <span className="title">Data Sets</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/teacher/assignments">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-bars" />
+                                    </span>
                                     <span className="title">Assignments</span>
                                     <span className="arrow">
                                         <i className="arrow-icon" />
@@ -265,7 +276,7 @@ class TeacherHeader extends Component {
                                     </span>
                                 </NavLink>
                             </li>
-                            <li className="nav-item dropdown">
+                            {/* <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/submissions">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-bars" />
@@ -275,7 +286,7 @@ class TeacherHeader extends Component {
                                         <i className="arrow-icon" />
                                     </span>
                                 </NavLink>
-                            </li>
+                            </li> */}
                             {/* <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/preview">
                                     <span className="icon-holder">

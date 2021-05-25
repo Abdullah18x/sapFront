@@ -31,6 +31,7 @@
       getTeacherSudents = async () => {
         try {
           let studentsList = await lecturer.getStudents(this.state.lecturerId, this.state.token)
+          console.log(studentsList)
           this.setState({
             lecturerStudents:studentsList
           })
@@ -40,17 +41,15 @@
         
       }
 
-      removeFromSection = async (studentId) => {
-        try {
-          // let toRemove = await lecturer.getStudents(this.state.lecturerId, this.state.token)
-          // this.setState({
-          //   lecturerStudents:studentsList
-          // })
-        } catch (error) {
-          console.log(error)
-        }
+      // removeFromSection = async (studentId) => {
+      //   try {
+      //     let toRemove = await lecturer.removeStudentFromSection(studentId, this.state.token)
+      //     this.getTeacherSudents()
+      //   } catch (error) {
+      //     console.log(error)
+      //   }
         
-      }
+      // }
     
       componentDidMount(){
         if(this.state.lecturerId === null || this.state.lecturerId === undefined || this.state.userType === null || this.state.userType === undefined || this.state.token === null || this.state.token === undefined){
@@ -101,6 +100,10 @@
                                 <tbody>
                                 {
                                   this.state.lecturerStudents.map((data, index) => {
+                                    let AtRisk = 'Not At Risk'
+                                    if (data.atRisk === 1) {
+                                      AtRisk = ' At Risk'
+                                    }
                                     return (
                                       <tr key={index}>
                                         <td>{data.studentId}</td>
@@ -109,7 +112,7 @@
                                         <td>{data.email}</td>
                                         <td>{data.subject}</td>
                                         <td>{data.section}</td>
-                                        <td>{data.atRisk}</td>
+                                        <td>{AtRisk}</td>
                                         <td>
                                           <div className="dropdown dropdown-animated scale-left">
                                               <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
@@ -118,18 +121,18 @@
                                               <div className="dropdown-menu">
                                               <Link 
                                                   className="dropdown-item"
-                                                  to=''
+                                                  to='/teacher/studentProfile'
                                                   state={{
-                                                      
+                                                      studentId:data.studentId
                                                   }}
                                                   >
                                                   <i className="anticon anticon-eye" />
                                                   <span className="m-l-10">View Profile</span>
                                               </Link>
-                                              <button onClick={()=>{this.removeFromSection(data.studentId)}} className="dropdown-item" type="button">
+                                              {/* <button onClick={()=>{this.removeFromSection(data.studentId)}} className="dropdown-item" type="button">
                                                 <i className="anticon anticon-delete" />
                                                 <span className="m-l-10">Remove from Section</span>
-                                              </button>
+                                              </button> */}
                                               
                                               </div>
                                           </div>
