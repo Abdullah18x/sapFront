@@ -133,7 +133,7 @@ class TeacherDashboard extends Component{
               <i className="text-primary anticon anticon-profile" />
             </div>
             <div className="d-flex align-items-center m-l-10">
-              <h2 className="m-b-0 m-r-5">5</h2>
+              <h2 className="m-b-0 m-r-5">{this.state.assignments.length}</h2>
               <span className="text-gray">Assignments Assigned</span>
             </div>
           </div>
@@ -271,9 +271,9 @@ class TeacherDashboard extends Component{
                                     <div className="dropdown-menu">
                                     <Link 
                                         className="dropdown-item"
-                                        to='/admin/lecturerStudents'
+                                        to='/teacher/studentProfile'
                                         state={{
-                                            
+                                          studentId:data.studentId
                                         }}
                                         >
                                         <i className="anticon anticon-eye" />

@@ -222,6 +222,17 @@ class TeacherHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/teacher/studentCallibration">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">Callibrate Students</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/pendingRequests">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />

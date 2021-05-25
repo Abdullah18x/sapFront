@@ -47,6 +47,7 @@ import UpdateAssignment from './pages/Teacher/UpdateAssignment'
 import TeacherAssignedAssignments from './pages/Teacher/AssignedAssignments'
 import ViewAssignedAssignment from './pages/Teacher/ViewAssignedAssignment'
 import StudentProfile2 from './pages/Teacher/StudentProfile.js';
+import StudentCallibration from './pages/Teacher/CallibrateStundents'
 import ErrorPage from './pages/error.js'
 import StudentSubmission from './pages/Teacher/StudentSubmission'
 
@@ -106,6 +107,7 @@ function App() {
         <ViewAssignedAssignment path='/viewAssignedAssignment'/>
         <StudentSubmission path='/studentSubmission'/>
         <StudentProfile2 path='/studentProfile' />
+        <StudentCallibration path='/studentCallibration' />
         <Settings path="/settings"/>
       </TeacherHeader>
     </Router>

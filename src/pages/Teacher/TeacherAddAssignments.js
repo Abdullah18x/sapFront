@@ -13,6 +13,7 @@ const lecturer = require('../../axios/lecturer')
         token: ls.get('token'),
         title:'',
         totalMarks:0,
+        timeNeeded:0,
         assignDate:'',
         assignTime:'',
         dueDate:'',
@@ -66,6 +67,16 @@ const lecturer = require('../../axios/lecturer')
         if(Number.isInteger(parseInt(num))){
           this.setState({
             totalMarks:num
+          })
+        }
+        
+      }
+
+      setTimeNeeded = (event) => {
+        let num = event.target.value
+        if(Number.isInteger(parseInt(num))){
+          this.setState({
+            timeNeeded:num
           })
         }
         
@@ -197,6 +208,7 @@ const lecturer = require('../../axios/lecturer')
           data.append('lecturerId',this.state.lecturerId)
           data.append('title', this.state.title)
           data.append('totalMarks', this.state.totalMarks)
+          data.append('timeNeeded', this.state.timeNeeded)
           data.append('resourceMaterial',this.state.resourceMaterial)
           data.append('details',this.state.details)
           data.append('resourceLinks',this.state.resourceLinks)
@@ -243,13 +255,17 @@ const lecturer = require('../../axios/lecturer')
                             <div className="m-t-25">
                               <form>
                                 <div className="form-row">
-                                  <div className="form-group col-md-6">
+                                  <div className="form-group col-md-4">
                                     <label htmlFor="assignmentTitle">Assignment Title</label>
                                     <input type="text" className="form-control" id="assignmentTitle" placeholder="Title" onChange={(e)=>{this.setitle(e)}}/>
                                   </div>
-                                  <div className="form-group col-md-6">
+                                  <div className="form-group col-md-4">
                                     <label htmlFor="totalMarks">Total Marks</label>
                                     <input type="number" className="form-control" id="totalMarks" placeholder="Marks" onChange={(e)=>{this.setTotalMarks(e)}}/>
+                                  </div>
+                                  <div className="form-group col-md-4">
+                                    <label htmlFor="totalMarks">Time Needed</label>
+                                    <input type="number" className="form-control" id="timeNeeded" placeholder="Minutes" onChange={(e)=>{this.setTimeNeeded(e)}}/>
                                   </div>
                                 </div>
                                 <div className="form-row">
