@@ -12,7 +12,12 @@ class StudentCallibration extends Component{
     assignments:[],
     sections:[],
     students:[],
+    subjectId:0,
+    sectionId:0,
     assignId:0,
+    totalAssigned:0,
+    totalMarks:0,
+    totalTime:0,
     loggedIn: true
     }
 
@@ -44,7 +49,7 @@ class StudentCallibration extends Component{
         if (this.state.sections.length > 1) {
         return this.state.sections.map((data,fields) => {
             return (
-                <option value={data.assignId}>{data.section} ({data.subject}) </option>
+                <option value={JSON.stringify(data)}>{data.section} ({data.subject}) </option>
             )
         })
         }
@@ -54,12 +59,25 @@ class StudentCallibration extends Component{
     }
 
     selectClass = async (e) => {
-        let sectionStudents = await lecturer.getSectionStudents(e.target.value, this.state.token)
-        console.log(sectionStudents)
-        this.setState({
-            assignId:e.target.value,
-            students:sectionStudents
-        })
+        if (e.target.value != 0) {
+            e = JSON.parse(e.target.value)
+            let sectionStudents = await lecturer.getSectionStudents(e.assignId, this.state.token)
+            console.log(sectionStudents)
+            this.setState({
+                assignId:e.assignId,
+                sectionId:e.sectionId,
+                subjectId:e.subjectId,
+                students:sectionStudents
+            })
+        }else{
+            this.setState({
+                assignId:0,
+                sectionId:0,
+                subjectId:0,
+                students:[]
+            })
+        }
+        
         // this.getSectionStudents()
     }
 
@@ -116,7 +134,24 @@ class StudentCallibration extends Component{
     }
 
     callibrateAllStudents = async () => {
-        let getAssignedAssignmentsStats = await lecturer.getAssignedAssignmentsStats(this.state.assignId, this.state.token)
+        if (this.state.assignId > 0) {
+            let getAssignedAssignmentsStats = await lecturer.getAssignedAssignmentsStats(this.state.lecturerId, this.state.sectionId, this.state.subjectId, this.state.token)
+            console.log(getAssignedAssignmentsStats)
+            this.setState({
+                totalAssigned:getAssignedAssignmentsStats[0].totalAssigned,
+                totalMarks:getAssignedAssignmentsStats[0].totalMarks,
+                totalTime:getAssignedAssignmentsStats[0].totalTime
+            })
+            if (this.state.totalAssigned >= 2) {
+                let getStudentStats = await lecturer.getStudentsStats(this.state.lecturerId, this.state.sectionId, this.state.subjectId, this.state.token)
+            }
+            else{
+                alert('Minium 3 Assignments Assigned required for callibration')
+            }
+        }else{
+            alert('Please Select a Class')
+        }
+        
     }
 
     componentDidMount(){
@@ -182,8 +217,9 @@ class StudentCallibration extends Component{
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
-                            <th>Total Marks</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Roll No</th>
                             <th>Status</th>
                             <th>Action</th>
                             

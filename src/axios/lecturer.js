@@ -559,6 +559,45 @@ let deleteStudentSubmission = async (submissionId,token) => {
   }
 }
 
+let getAssignedAssignmentsStats = async (lecturerId,sectionId, subjectId, token) =>{
+  try {
+      const response = await axios.post(`${url}/sections/getAssignedAssignmentsStats`,{
+        lecturerId:lecturerId,
+        sectionId:sectionId,
+        subjectId:subjectId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getStudentsStats = async (lecturerId,sectionId, subjectId, token) =>{
+  try {
+      const response = await axios.post(`${url}/sections/getStudentsStats`,{
+        sectionId:sectionId,
+        subjectId:subjectId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
 
 
 export {
@@ -591,5 +630,7 @@ export {
   gradeAssignment,
   deleteStudentSubmission,
   removeStudentFromSection,
-  getRecentSTDSubmissions
+  getRecentSTDSubmissions,
+  getAssignedAssignmentsStats,
+  getStudentsStats
 }
