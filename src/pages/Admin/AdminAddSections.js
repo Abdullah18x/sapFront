@@ -64,6 +64,7 @@ class EditSection extends Component{
         try {
           let newSection = this.state.sectionSeason.concat(this.state.sectionNumber.toString().concat('-'.concat(this.state.sectionDep.concat('-'.concat(this.state.sectionAlphabet)))))
           await admin.addSection(newSection,this.state.token)
+          alert('Inserted')
           console.log(newSection)
           this.setState({
             section:newSection

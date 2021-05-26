@@ -598,6 +598,26 @@ let getStudentsStats = async (lecturerId,sectionId, subjectId, token) =>{
     }
 }
 
+let saveAtRiskStudents = async (dataSTD,sectionId, subjectId, token) =>{
+  try {
+      const response = await axios.post(`${url}/sections/saveAtRiskStudents`,{
+        dataSTD:dataSTD,
+        sectionId:sectionId,
+        subjectId:subjectId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
 
 
 export {
@@ -632,5 +652,6 @@ export {
   removeStudentFromSection,
   getRecentSTDSubmissions,
   getAssignedAssignmentsStats,
-  getStudentsStats
+  getStudentsStats,
+  saveAtRiskStudents
 }

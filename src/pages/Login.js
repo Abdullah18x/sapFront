@@ -35,30 +35,41 @@ class Login extends Component {
     Login = async () => {
         if(this.state.userType === "admin"){
             let response = await requestInfo.adminLogin(this.state.userName, this.state.password)
-            var jsObject = JSON.parse(JSON.stringify(response))
-            ls.clear()
-            ls('adminId',jsObject.adminId)
-            ls('userType',1)
-            ls('token', jsObject.token)
-            window.location.href='/admin'
+            console.log(response);
+            if (response.adminId) {
+                ls.clear()
+                ls('adminId',response.adminId)
+                ls('userType',1)
+                ls('token', response.token)
+                window.location.href='/admin'
+            }else{
+                alert('Invalid login')
+            }
+            
         }else if(this.state.userType === "teacher"){
             let response = await requestInfo.teacherLogin(this.state.userName, this.state.password)
-            var jsObject = JSON.parse(JSON.stringify(response))
-            console.log(jsObject)
-            ls.clear()
-            ls('teacherId',jsObject.lecturerId)
-            ls('userType',2)
-            ls('token', jsObject.token)
-            window.location.href='/teacher'
+            if (response.lecturerId) {
+                ls.clear()
+                ls('teacherId',response.lecturerId)
+                ls('userType',2)
+                ls('token', response.token)
+                window.location.href='/teacher'
+            }else{
+                alert('Invalid login')
+            }
 
         }else if(this.state.userType === "student"){
             let response = await requestInfo.studentLogin(this.state.userName, this.state.password)
-            var jsObject = JSON.parse(JSON.stringify(response))
-            ls.clear()
-            ls('studentId',jsObject.studentId)
-            ls('userType',3)
-            ls('token', jsObject.token)
-            window.location.href='/student'
+            if (response.studentId) {
+                ls.clear()
+                ls('studentId',response.studentId)
+                ls('userType',3)
+                ls('token', response.token)
+                window.location.href='/student'
+            }else{
+                alert('Invalid login')
+            }
+            
         }
     }
     render() {

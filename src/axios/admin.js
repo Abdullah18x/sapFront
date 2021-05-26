@@ -75,6 +75,26 @@ let getAssignedSections = async (lecturerId,token) => {
   }
 }
 
+let getLecturerAssignedSection = async (sectionId,subjectId,token) => {
+  try {
+    const response = await axios.post(`${url}/lecturer/getLecturerAssignedSection`,{
+      subjectId:subjectId,
+      sectionId:sectionId
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
 let getSections = async (token) => {
   try {
     const response = await axios.post(`${url}/sections/getSections`,{},
@@ -192,10 +212,10 @@ let assignLecturer = async (lecturerId, subjectId, sectionId, programmingLanguag
   }
 }
 
-let updateLecturerStatus = async (username, status, token) => {
+let updateLecturerStatus = async (lecturerId, status, token) => {
   try {
     await axios.patch(`${url}/lecturer/updateLecturerStatus`,{
-      userName:username,
+      lecturerId:lecturerId,
       status:status
     },
     {
@@ -500,5 +520,6 @@ export {
   getAtRiskStudents,
   getStudents,
   unAssignTeacher,
-  removeTeacher
+  removeTeacher,
+  getLecturerAssignedSection
 }

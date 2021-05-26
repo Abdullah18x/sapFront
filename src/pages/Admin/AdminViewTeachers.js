@@ -104,7 +104,6 @@ class Viewteacher extends Component{
                         name={data.userName}
                         email={data.email}
                         status={data.status}
-                        assignSection={()=>this.assignLecturerSection(data.lecturerId)}
                         deleteLecturer={() => {this.deletelecturer(data.lecturerId)}}
 
                       />
@@ -118,6 +117,7 @@ class Viewteacher extends Component{
                   <th>Full Name</th>
                   <th>Section</th>
                   <th>Subject</th>
+                  <th>Action</th>
                 </tr>
               </tfoot>
             </table>

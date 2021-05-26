@@ -213,17 +213,6 @@ class AdminHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink className="dropdown-toggle" to="/admin/add-section">
-                                    <span className="icon-holder">
-                                        <i className="anticon anticon-inbox" />
-                                    </span>
-                                    <span className="title">Add Sections</span>
-                                    <span className="arrow">
-                                        <i className="arrow-icon" />
-                                    </span>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/admin/sections">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />
@@ -235,11 +224,44 @@ class AdminHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/admin/add-section">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">Add Sections</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/admin/subjects">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">Subjects</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/admin/viewStudents">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />
                                     </span>
                                     <span className="title">View Students</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/admin/sections">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">Add Students</span>
                                     <span className="arrow">
                                         <i className="arrow-icon" />
                                     </span>

@@ -18,6 +18,7 @@ class StudentCallibration extends Component{
     totalAssigned:0,
     totalMarks:0,
     totalTime:0,
+    atRiskStudents:[],
     loggedIn: true
     }
 
@@ -116,10 +117,10 @@ class StudentCallibration extends Component{
                                 <i className="anticon anticon-eye" />
                                 <span className="m-l-10">View Profile</span>
                             </Link>
-                            <button onClick={() => {this.delete(data.assignmentId)}} className="dropdown-item" type="button">
+                            {/* <button onClick={() => {this.delete(data.assignmentId)}} className="dropdown-item" type="button">
                             <i className="anticon anticon-delete" />
                             <span className="m-l-10">Callibrate</span>
-                            </button>
+                            </button> */}
                             
                             </div>
                         </div>
@@ -143,7 +144,57 @@ class StudentCallibration extends Component{
                 totalTime:getAssignedAssignmentsStats[0].totalTime
             })
             if (this.state.totalAssigned >= 2) {
-                let getStudentStats = await lecturer.getStudentsStats(this.state.lecturerId, this.state.sectionId, this.state.subjectId, this.state.token)
+                this.setState({
+                    atRiskStudents:[]
+                })
+                let getStudentsStats = await lecturer.getStudentsStats(this.state.lecturerId, this.state.sectionId, this.state.subjectId, this.state.token)
+                console.log(getStudentsStats);
+                for (let i = 0; i < getStudentsStats.length; i++) {
+                    if (getStudentsStats[i].totalSubmissions === 0 || (getStudentsStats[i].totalSubmissions/this.state.totalAssigned)*100 < 60) {
+                        this.state.atRiskStudents.push({
+                            studentId:getStudentsStats[i].studentId,
+                            sectionId:this.state.sectionId,
+                            subjectId:this.state.subjectId,
+                            atRisk:1
+                        })
+                    }else if(getStudentsStats[i].totalMarks === 0 || (getStudentsStats[i].totalMarks/this.state.totalMarks)*100 < 65){
+                        this.state.atRiskStudents.push({
+                            studentId:getStudentsStats[i].studentId,
+                            sectionId:this.state.sectionId,
+                            subjectId:this.state.subjectId,
+                            atRisk:1
+                        })
+                    }else if((getStudentsStats[i].totalMarks/this.state.totalMarks)*100 > 65 && (getStudentsStats[i].totalMarks/this.state.totalMarks)*100 < 85 && getStudentsStats[i].totalTime > (this.state.totalTime+((60/100)*this.state.totalTime))){
+                        this.state.atRiskStudents.push({
+                            studentId:getStudentsStats[i].studentId,
+                            sectionId:this.state.sectionId,
+                            subjectId:this.state.subjectId,
+                            atRisk:1
+                        })
+                    }else if(getStudentsStats[i].timesLate > 0){
+                        if ((getStudentsStats[i].totalMarks/this.state.totalMarks)*100 > 85 && (getStudentsStats[i].timesLate/getStudentsStats[i].totalSubmissions)*100 >= 85) {
+                            this.state.atRiskStudents.push({
+                                studentId:getStudentsStats[i].studentId,
+                                sectionId:this.state.sectionId,
+                                subjectId:this.state.subjectId,
+                                atRisk:1
+                            })
+                        }
+                        
+                    }
+
+                    
+                }
+                console.log(JSON.stringify(this.state.atRiskStudents))
+                let saveAtRiskStudents = await lecturer.saveAtRiskStudents(JSON.stringify(this.state.atRiskStudents),this.state.sectionId,this.state.subjectId, this.state.token)
+                let sectionStudents = await lecturer.getSectionStudents(this.state.assignId, this.state.token)
+                
+                this.setState({
+                    assignId:this.state.assignId,
+                    sectionId:this.state.sectionId,
+                    subjectId:this.state.subjectId,
+                    students:sectionStudents
+                })
             }
             else{
                 alert('Minium 3 Assignments Assigned required for callibration')

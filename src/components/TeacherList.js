@@ -24,10 +24,20 @@ const viewTeacherList = (props) => {
                           <i className="anticon anticon-eye" />
                           <span className="m-l-10">View</span>
                         </Link>
-                        <button onClick={props.assignSection} className="dropdown-item" type="button">
+                        <Link 
+                          className="dropdown-item"
+                          to='/admin/assigneSection'
+                          state={{
+                            teacherId:props.id
+                          }}
+                        >
+                          <i className="anticon anticon-eye" />
+                          <span className="m-l-10">Assign Section</span>
+                        </Link>
+                        {/* <button onClick={props.assignSection} className="dropdown-item" type="button">
                           <i className="anticon anticon-download" />
                           <span className="m-l-10">Assign Section</span>
-                        </button>
+                        </button> */}
                         <button id={props.id} onClick={props.deleteLecturer} className="dropdown-item" type="button">
                           <i className="anticon anticon-delete" />
                           <span className="m-l-10">Delete</span>

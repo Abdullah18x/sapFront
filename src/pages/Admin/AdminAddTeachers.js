@@ -55,39 +55,39 @@ setEmail = (event) => {
   })
 }
 
-setSubject= (event) => {
-  let value = event.target.value
-  this.setState({
-      subject:value
-  })
-}
+// setSubject= (event) => {
+//   let value = event.target.value
+//   this.setState({
+//       subject:value
+//   })
+// }
 
-setSection= (event) => {
-  let value = event.target.value
-  this.setState({
-      section:value
-  })
-  if(this.state.section > 0){
-    this.setState({
-      status:1
-    })
-  }else{
-    this.setState({
-      status:0
-    })
-  }
-}
+// setSection= (event) => {
+//   let value = event.target.value
+//   this.setState({
+//       section:value
+//   })
+//   if(this.state.section > 0){
+//     this.setState({
+//       status:1
+//     })
+//   }else{
+//     this.setState({
+//       status:0
+//     })
+//   }
+// }
 
-getSubject = async () => {
-  try {
-    let retrievedSubjects = await admin.getSubjects(this.state.token)
-    this.setState({
-      subjectList:retrievedSubjects
-    })
-  } catch (error) {
+// getSubject = async () => {
+//   try {
+//     let retrievedSubjects = await admin.getSubjects(this.state.token)
+//     this.setState({
+//       subjectList:retrievedSubjects
+//     })
+//   } catch (error) {
     
-  }
-}
+//   }
+// }
 
 getSection = async () => {
   try {
@@ -104,15 +104,16 @@ addLecturer = async (event) => {
   try {
     event.preventDefault()
     await admin.addLecturer(this.state.userName, this.state.password, this.state.email, this.state.name, this.state.status, this.state.token)
-    if(this.state.subject > 0 && this.state.section > 0){
-      let response = await admin.getLecturerByUserName(this.state.userName,this.state.token)
-      console.log(response)
-      await admin.assignLecturer(response.lecturerId, this.state.subject, this.state.section, 1, this.state.token)
-      await admin.updateLecturerStatus(this.state.userName, 1, this.state.token)
+    alert('Inserted')
+    // if(this.state.subject > 0 && this.state.section > 0){
+    //   let response = await admin.getLecturerByUserName(this.state.userName,this.state.token)
+    //   console.log(response)
+    //   await admin.assignLecturer(response.lecturerId, this.state.subject, this.state.section, 1, this.state.token)
+    //   await admin.updateLecturerStatus(this.state.userName, 1, this.state.token)
 
-    }
+    // }
   } catch (error) {
-    
+    console.log(error);
   }
 }
 
@@ -124,8 +125,8 @@ addLecturer = async (event) => {
       window.location.href='/error'
     }else{
       this.verification()
-      this.getSubject()
-      this.getSection()
+      // this.getSubject()
+      // this.getSection()
     }
     
   }
@@ -146,7 +147,7 @@ addLecturer = async (event) => {
       </div>
       <div className="card">
         <div className="card-body">
-          <h4>Add New Teacher</h4>
+          <h4>Add New Teacher (Default Password is always 12345)</h4>
           <div className="m-t-25">
             <form>
               <div className="form-row">
@@ -162,7 +163,7 @@ addLecturer = async (event) => {
                   <label htmlFor="inputEmail4">Email</label>
                   <input type="email" className="form-control" id="inputEmail4"  onChange={(e) => {this.setEmail(e)}} />
                 </div>
-                <div className="form-group col-md-6">
+                {/* <div className="form-group col-md-6">
                   <label htmlFor="inputState">Subject</label>
                   <select id="inputState" className="form-control"  onChange={(e) => {this.setSubject(e)}}>
                     <option selected value={0}>Choose...</option>
@@ -187,7 +188,7 @@ addLecturer = async (event) => {
                       })
                     }
                   </select>
-                </div>
+                </div> */}
               </div>
               <button onClick={this.addLecturer} type="button" className="btn btn-primary">Submit</button>
             </form>

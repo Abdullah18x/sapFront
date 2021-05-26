@@ -27,9 +27,11 @@ import AdminViewSectionDetails from './pages/Admin/ViewSectionDetails';
 import AdminViewTeachers from './pages/Admin/AdminViewTeachers.js';
 import AdminViewteacherProfile from './pages/Admin/ViewTeacherProfile'
 import AtRiskStudents from './pages/Admin/AtRiskStudentsList'
+import AssignTeacherSection from './pages/Admin/AssignTeacherSection'
 import TeachersWithARS from './pages/Admin/TeachersWithARS'
 import LecturerStudents from './pages/Admin/LecturerStudents'
 import EditSection from './pages/Admin/EditSection'
+import Subjects from './pages/Admin/Subjects'
 import ViewStudents from './pages/Admin/StudentsList'
 
 import TeacherDashboard from './pages/Teacher/TeacherDashboard.js';
@@ -87,6 +89,8 @@ function App() {
         <AdminViewteacherProfile path="/teachersProfile"/>
         <LecturerStudents path='/lecturerStudents'/>
         <EditSection path='/editSection'/>
+        <AssignTeacherSection path='/assigneSection' />
+        <Subjects path='/subjects'/>
         <ViewStudents path='/viewStudents'/>
       </AdminHeader>
       
