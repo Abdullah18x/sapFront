@@ -257,7 +257,7 @@ class AdminHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink className="dropdown-toggle" to="/admin/sections">
+                                <NavLink className="dropdown-toggle" to="/admin/addStudent">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />
                                     </span>

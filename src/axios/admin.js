@@ -149,6 +149,45 @@ let getSubjects = async (token) => {
   }
 }
 
+let insertSubject = async (subject,token) => {
+  try {
+    const response = await axios.post(`${url}/subjects/insertSubject`,{
+      subject:subject
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let updateSubject = async (subjectId, subject,token) => {
+  try {
+    const response = await axios.patch(`${url}/subjects/updateSubject`,{
+      subject:subject,
+      subjectId:subjectId
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
 let addLecturer = async (userName, password, email, name, status, token) => {
   try {
     await axios.post(`${url}/lecturer/addL`,{
@@ -157,6 +196,45 @@ let addLecturer = async (userName, password, email, name, status, token) => {
       email:email,
       name:name,
       status:status
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+let addStudent = async (userName, password, email, name, rollNo, token) => {
+  try {
+    await axios.post(`${url}/student/addS`,{
+      userName:userName,
+      password:password,
+      email:email,
+      name:name,
+      rollNo:rollNo
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let getStudent = async (studentId, token) => {
+  try {
+    await axios.post(`${url}/student/fetchStudentA`,{
+      studentId:studentId
     },
     {
       headers:{
@@ -503,7 +581,9 @@ export {
   getSections,
   getSection,
   getSubjects,
+  insertSubject,
   addLecturer,
+  addStudent,
   getLecturerByUserName,
   assignLecturer,
   updateLecturerStatus,
@@ -521,5 +601,6 @@ export {
   getStudents,
   unAssignTeacher,
   removeTeacher,
-  getLecturerAssignedSection
+  getLecturerAssignedSection,
+  updateSubject
 }

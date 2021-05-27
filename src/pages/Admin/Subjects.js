@@ -10,6 +10,9 @@ class Subjects extends Component{
     userType: ls.get('userType'),
     token: ls.get('token'),
     studentsList:[],
+    subject:'',
+    editSubjectId:0,
+    editSubject:'',
     loggedIn: true
     }
 
@@ -29,14 +32,42 @@ class Subjects extends Component{
     }
 
     setSubjects = async () => {
-    try {
         let studentsList = await admin.getSubjects(this.state.token)
         this.setState({
             studentsList:studentsList
         })
-    } catch (error) {
-        console.log(error)
     }
+
+    setSubject = (e) => {
+        let subject = e.target.value
+        this.setState({
+            subject:subject
+        })
+    }
+
+    insertSubject = async () => {
+        let insertSubject = await admin.insertSubject(this.state.subject, this.state.token)
+        this.setSubjects()
+    }
+
+    setToEditSubjectValues = (a,b) => {
+        this.setState({
+            editSubjectId:a,
+            editSubject: b
+        })
+    }
+    setToEditSubject = (e) => {
+        this.setState({
+            editSubject:e.target.value
+        })
+    }
+    updateSubject = async () => {
+        if (this.state.editSubject != '') {
+            let editSubject = await admin.updateSubject(this.state.editSubjectId, this.state.editSubject, this.state.token)
+            this.setSubjects()
+        }else{
+            alert('Cannot set Empty Value')
+        }
     }
 
     componentDidMount(){
@@ -70,8 +101,50 @@ class Subjects extends Component{
                     </nav>
                 </div>
                 </div>
+                <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Edit Subject:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                            
+                                <div className="input-affix">
+                                    <i className="prefix-icon anticon anticon-user" />
+                                    <input type="text" className="form-control" placeholder="Subject" value={this.state.editSubject} onChange={(e) => this.setToEditSubject(e)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" onClick={this.updateSubject} className="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
                 <div className="card">
-    <div className="card-body"></div></div>
+                    <div className="card-body">
+                    <label className="font-weight-semibold" htmlFor="userName">Insert Subject:</label>
+                    <div className='row'>
+                    <div className="form-group">
+                        
+                        <div className="input-affix">
+                            <i className="prefix-icon anticon anticon-user" />
+                            <input type="text" className="form-control"  placeholder="Username" onChange={(e) => this.setSubject(e)} />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="d-flex align-items-center justify-content-between">
+                            <button type="button" className="btn btn-primary" onClick={this.insertSubject}>Insert</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
                 <div className="card">
     <div className="card-body">
     <h4>View All Subjects</h4>
@@ -98,16 +171,11 @@ class Subjects extends Component{
                         <i className="anticon anticon-ellipsis" />
                         </a>
                         <div className="dropdown-menu">
-                        <Link 
-                            className="dropdown-item"
-                            to='/admin/studentProfile'
-                            state={{
-                                studentId:data.studentId
-                            }}
-                            >
-                            <i className="anticon anticon-eye" />
+                        
+                        <button id={data.subjectId} onClick={() => {this.setToEditSubjectValues(data.subjectId, data.subject)}}  className="dropdown-item" type="button" data-toggle="modal" data-target="#exampleModal">
+                            <i className="anticon anticon-delete" />
                             <span className="m-l-10">Edit</span>
-                        </Link>
+                        </button>
                         
                         </div>
                     </div>
