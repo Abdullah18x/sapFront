@@ -184,6 +184,7 @@ class Viewteacherprofile extends Component{
                         subject={data.subject}
                         subjectId={data.subjectId}
                         lecturerId={this.state.teacherId}
+                        assignId={data.assignId}
                         unAssign={() => {this.unAssignTeacher(this.state.teacherId, data.sectionId, data.subjectId)}}
                       />
                     )

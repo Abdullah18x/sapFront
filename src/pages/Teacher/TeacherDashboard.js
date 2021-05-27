@@ -232,7 +232,7 @@ class TeacherDashboard extends Component{
               <div>
                 {/* <a href="javascript:void(0);" className="btn btn-sm btn-default">View All</a> */}
                 
-                <Link className="btn btn-sm btn-default" to='/teacher/students'>
+                <Link className="btn btn-sm btn-default" to='/teacher/studentCallibration'>
                 View All
                 </Link>
                 
@@ -351,14 +351,14 @@ class TeacherDashboard extends Component{
                                     <i className="anticon anticon-eye" />
                                     <span className="m-l-10">View Assignment</span>
                                 </Link>
-                                <button onClick={() => {this.editDueDate(data.assignmentId)}} className="dropdown-item" type="button">
+                                {/* <button onClick={() => {this.editDueDate(data.assignmentId)}} className="dropdown-item" type="button">
                                   <i className="anticon anticon-delete" />
                                   <span className="m-l-10">Edit Due Date</span>
                                 </button>
                                 <button onClick={() => {this.deleteAssigned(data.assignmentId,data.assignedId)}} className="dropdown-item" type="button">
                                   <i className="anticon anticon-delete" />
                                   <span className="m-l-10">Un-Assign</span>
-                                </button>
+                                </button> */}
                                 
                                 </div>
                             </div>

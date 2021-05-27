@@ -57,6 +57,7 @@ class AdminDashboard extends Component {
 
     setLecturerAtRiskStudents = async () => {
       let returnedAtRiskList = await admin.lecturerAtRiskStudents(this.state.token)
+      console.log(returnedAtRiskList)
       this.setState({
         lecturerAtRiskStudents:returnedAtRiskList
       })

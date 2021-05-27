@@ -417,13 +417,12 @@ let getSectionStudents = async (sectionId,token) => {
   }
 }
 
-let getLecturerStudents = async (lecturerId,sectionId,subjectId,token) => {
+let getLecturerStudents = async (lecturerId,assignId,token) => {
   try {
     const response = await axios.post(`${url}/student/getLecturerStudents`,
     {
-      sectionId:sectionId,
-      lecturerId:lecturerId,
-      subjectId:subjectId
+      assignId:assignId,
+      lecturerId:lecturerId
     },
     {
       headers:{

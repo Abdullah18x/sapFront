@@ -18,9 +18,9 @@ let viewTeacherAssignedSection = (props) => {
                           className="dropdown-item"
                           to='/admin/lecturerStudents'
                           state={{
-                            sectionId:props.sectionId,
+                            assignId:props.assignId,
                             lecturerId:props.lecturerId,
-                            subjectId:props.subjectId
+                            sectionId:props.sectionId
                           }}
                         >
                           <i className="anticon anticon-eye" />

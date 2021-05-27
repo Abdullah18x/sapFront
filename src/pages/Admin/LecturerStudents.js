@@ -34,9 +34,9 @@ class LecturerStudents extends Component{
         try {
           let sectionId = this.props.location.state.sectionId
           let lecturerId = this.props.location.state.lecturerId
-          let subjectId = this.props.location.state.subjectId
+          let assignId = this.props.location.state.assignId
           let section = await admin.getSection(sectionId,this.state.token)
-          let returnedStudents = await admin.getLecturerStudents(lecturerId,sectionId,subjectId,this.state.token)
+          let returnedStudents = await admin.getLecturerStudents(lecturerId,assignId,this.state.token)
           this.setState({
               section:section[0].section,
               lecturerStudents:returnedStudents
@@ -81,7 +81,7 @@ class LecturerStudents extends Component{
           <h3 style={{textAlign:'center'}}>Section: {this.state.section}</h3>
           <div className="card">
             <div className="card-body">
-              <h4>Teacher: {this.state.lecturerName}</h4>
+              <h4>Students</h4>
               <div className="m-t-25">
                 <table id="data-table" className="table" >
                   <thead>
@@ -98,13 +98,17 @@ class LecturerStudents extends Component{
                   <tbody>
                   {
                         this.state.lecturerStudents.map((data, index) => {
+                          let atRisk = 'Not At Risk'
+                          if (data.atRisk === 1) {
+                            atRisk = 'At Risk'
+                          }
                           return (
                             <tr key={index}>
                               <td>{data.studentId}</td>
                               <td>{data.name}</td>
                               <td>{data.email}</td>
                               <td>{data.rollNo}</td>
-                              <td>{data.atRisk}</td>
+                              <td>{atRisk}</td>
                               <td>
                                 <div className="dropdown dropdown-animated scale-left">
                                     <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">

@@ -414,10 +414,11 @@ let removeStudentFromSection = async (studentId,token) => {
   }
 }
 
-let getSubmittedAssignments = async (assignedId, token) =>{
+let getSubmittedAssignments = async (lecturerId, assignedId, token) =>{
   try {
       const response = await axios.post(`${url}/assignment/getSubmittedAssignments`,{
-        assignedId:assignedId
+        assignedId:assignedId,
+        lecturerId:lecturerId
       },{
         headers:{
           Authorization: token
@@ -434,7 +435,10 @@ let getSubmittedAssignments = async (assignedId, token) =>{
 
 let getPendingStudents = async (assignedId,lecturerId, token) =>{
   try {
-      const response = await axios.post(`${url}/assignment/getPendingStudents`,{},{
+      const response = await axios.post(`${url}/assignment/getPendingStudents`,{
+        lecturerId:lecturerId,
+        assignedId:assignedId
+      },{
         headers:{
           Authorization: token
         }

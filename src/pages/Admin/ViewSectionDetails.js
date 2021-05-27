@@ -42,8 +42,8 @@ class ViewSectionDetails extends Component{
           })
           console.log(returnedSection)
         } catch (error) {
-          window.location.href='/error'
-          // console.log(error)
+          //window.location.href='/error'
+          console.log(error)
         }
         
     }
@@ -57,8 +57,8 @@ class ViewSectionDetails extends Component{
             sectionStudents:sectionStudents
           })
         } catch (error) {
-          window.location.href='/error'
-          // console.log(error)
+          //window.location.href='/error'
+          console.log(error)
         }
         
     }
@@ -134,7 +134,7 @@ class ViewSectionDetails extends Component{
                                         state={{
                                           sectionId:this.props.location.state.sectionId,
                                           lecturerId:data.lecturerId,
-                                          subjectId:data.subjectId
+                                          assignId:data.assignId
                                           
                                         }}
                                         >
@@ -184,7 +184,6 @@ class ViewSectionDetails extends Component{
                       <th>Full Name</th>
                       <th>Email</th>
                       <th>Roll No</th>
-                      <th>Subjects</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -198,7 +197,6 @@ class ViewSectionDetails extends Component{
                               <td>{data.name}</td>
                               <td>{data.email}</td>
                               <td>{data.rollNo}</td>
-                              <td>{data.totalSubjects}</td>
                               <td>
                                 <div className="dropdown dropdown-animated scale-left">
                                     <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
@@ -242,7 +240,6 @@ class ViewSectionDetails extends Component{
                       <th>Full Name</th>
                       <th>Email</th>
                       <th>Roll No</th>
-                      <th>Subjects</th>
                       <th>Action</th>
                     </tr>
                   </tfoot>

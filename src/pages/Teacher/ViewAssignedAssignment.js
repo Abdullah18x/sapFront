@@ -70,7 +70,7 @@ class ViewAssignedAssignment extends Component{
 
   getSubmittedAssignments = async() => {
       try {
-          let returnedSubmittedAssignments = await lecturer.getSubmittedAssignments(this.props.location.state.assignedId, this.state.token)
+          let returnedSubmittedAssignments = await lecturer.getSubmittedAssignments(this.state.lecturerId, this.props.location.state.assignedId, this.state.token)
           let submissions = returnedSubmittedAssignments.length
           console.log(returnedSubmittedAssignments)
           this.setState({
