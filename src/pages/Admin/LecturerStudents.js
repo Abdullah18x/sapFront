@@ -78,7 +78,7 @@ class LecturerStudents extends Component{
               </nav>
             </div>
           </div>
-          <h3 style={{textAlign:'center'}}>Section: {this.state.section}</h3>
+          <h3 style={{textAlign:'left',paddingLeft:'6px',}} className="m-b-25">Section: {this.state.section}</h3>
           <div className="card">
             <div className="card-body">
               <h4>Students</h4>

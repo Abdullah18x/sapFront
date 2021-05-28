@@ -118,9 +118,9 @@ changeSubject = (e) => {
       <div className="card">
         <div className="card-body">
           <h4>Assign {this.state.name}</h4><br />
-          <h5>Select Subject</h5>
-          <div className="form-group col-md-3">
-            <select id="inputState" className="form-control" onChange={(e) => {this.changeSubject(e)}}>
+          <h5 className="m-t-25">Select Subject</h5>
+          <div className="form-group col-md-3" style={{padding:"0px"}}>
+            <select id="inputState" className="form-control m-t-25" onChange={(e) => {this.changeSubject(e)}}>
                 <option value={0} selected>Select</option>
                 {
                     this.state.subjects.map((data,fileds) => {

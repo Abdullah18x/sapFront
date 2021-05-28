@@ -143,7 +143,7 @@ class StudentCallibration extends Component{
                 totalMarks:getAssignedAssignmentsStats[0].totalMarks,
                 totalTime:getAssignedAssignmentsStats[0].totalTime
             })
-            if (this.state.totalAssigned >= 2) {
+            if (this.state.totalAssigned >= 3) {
                 this.setState({
                     atRiskStudents:[]
                 })
@@ -153,30 +153,26 @@ class StudentCallibration extends Component{
                     if (getStudentsStats[i].totalSubmissions === 0 || (getStudentsStats[i].totalSubmissions/this.state.totalAssigned)*100 < 60) {
                         this.state.atRiskStudents.push({
                             studentId:getStudentsStats[i].studentId,
-                            sectionId:this.state.sectionId,
-                            subjectId:this.state.subjectId,
+                            assignId:this.state.assignId,
                             atRisk:1
                         })
                     }else if(getStudentsStats[i].totalMarks === 0 || (getStudentsStats[i].totalMarks/this.state.totalMarks)*100 < 65){
                         this.state.atRiskStudents.push({
                             studentId:getStudentsStats[i].studentId,
-                            sectionId:this.state.sectionId,
-                            subjectId:this.state.subjectId,
+                            assignId:this.state.assignId,
                             atRisk:1
                         })
                     }else if((getStudentsStats[i].totalMarks/this.state.totalMarks)*100 > 65 && (getStudentsStats[i].totalMarks/this.state.totalMarks)*100 < 85 && getStudentsStats[i].totalTime > (this.state.totalTime+((60/100)*this.state.totalTime))){
                         this.state.atRiskStudents.push({
                             studentId:getStudentsStats[i].studentId,
-                            sectionId:this.state.sectionId,
-                            subjectId:this.state.subjectId,
+                            assignId:this.state.assignId,
                             atRisk:1
                         })
                     }else if(getStudentsStats[i].timesLate > 0){
                         if ((getStudentsStats[i].totalMarks/this.state.totalMarks)*100 > 85 && (getStudentsStats[i].timesLate/getStudentsStats[i].totalSubmissions)*100 >= 85) {
                             this.state.atRiskStudents.push({
                                 studentId:getStudentsStats[i].studentId,
-                                sectionId:this.state.sectionId,
-                                subjectId:this.state.subjectId,
+                                assignId:this.state.assignId,
                                 atRisk:1
                             })
                         }
@@ -186,7 +182,7 @@ class StudentCallibration extends Component{
                     
                 }
                 console.log(JSON.stringify(this.state.atRiskStudents))
-                let saveAtRiskStudents = await lecturer.saveAtRiskStudents(JSON.stringify(this.state.atRiskStudents),this.state.sectionId,this.state.subjectId, this.state.token)
+                let saveAtRiskStudents = await lecturer.saveAtRiskStudents(JSON.stringify(this.state.atRiskStudents),this.state.assignId,this.state.token)
                 let sectionStudents = await lecturer.getSectionStudents(this.state.assignId, this.state.token)
                 
                 this.setState({

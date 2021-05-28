@@ -587,7 +587,8 @@ let getStudentsStats = async (lecturerId,sectionId, subjectId, token) =>{
   try {
       const response = await axios.post(`${url}/sections/getStudentsStats`,{
         sectionId:sectionId,
-        subjectId:subjectId
+        subjectId:subjectId,
+        lecturerId:lecturerId
       },{
         headers:{
           Authorization: token
@@ -602,12 +603,11 @@ let getStudentsStats = async (lecturerId,sectionId, subjectId, token) =>{
     }
 }
 
-let saveAtRiskStudents = async (dataSTD,sectionId, subjectId, token) =>{
+let saveAtRiskStudents = async (dataSTD,assignId, token) =>{
   try {
       const response = await axios.post(`${url}/sections/saveAtRiskStudents`,{
         dataSTD:dataSTD,
-        sectionId:sectionId,
-        subjectId:subjectId
+        assignId:assignId
       },{
         headers:{
           Authorization: token

@@ -35,6 +35,7 @@ import Subjects from './pages/Admin/Subjects'
 import AdminAddStudent from './pages/Admin/AdminAddStudent'
 import StudentProfile3 from './pages/Admin/StudentProfile.js';
 import ViewStudents from './pages/Admin/StudentsList'
+import AdminAddDataSet from './pages/Admin/AdminAddDataSet.js';
 
 import TeacherDashboard from './pages/Teacher/TeacherDashboard.js';
 import TeacherAddAssignments from './pages/Teacher/TeacherAddAssignments.js';
@@ -92,6 +93,7 @@ function App() {
         <LecturerStudents path='/lecturerStudents'/>
         <EditSection path='/editSection'/>
         <AssignTeacherSection path='/assigneSection' />
+        <AdminAddDataSet path='/adminAddDataSet'/>
         <Subjects path='/subjects'/>
         <AdminAddStudent path='/addStudent'/>
         <StudentProfile3 path='/studentProfile' />

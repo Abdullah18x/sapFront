@@ -149,6 +149,24 @@ let getSubjects = async (token) => {
   }
 }
 
+let saveDataSet = async (data, token) =>{
+  try {
+      const response = await axios.post(`${url}/dataSet/createDataSet`,
+        data
+      ,{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
 let insertSubject = async (subject,token) => {
   try {
     const response = await axios.post(`${url}/subjects/insertSubject`,{
@@ -601,5 +619,6 @@ export {
   unAssignTeacher,
   removeTeacher,
   getLecturerAssignedSection,
-  updateSubject
+  updateSubject,
+  saveDataSet
 }
