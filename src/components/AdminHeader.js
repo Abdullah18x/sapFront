@@ -213,6 +213,28 @@ class AdminHeader extends Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/admin/viewDataSets">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">View DataSets</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <NavLink className="dropdown-toggle" to="/admin/addDataSet">
+                                    <span className="icon-holder">
+                                        <i className="anticon anticon-inbox" />
+                                    </span>
+                                    <span className="title">Add Dataset</span>
+                                    <span className="arrow">
+                                        <i className="arrow-icon" />
+                                    </span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/admin/sections">
                                     <span className="icon-holder">
                                         <i className="anticon anticon-inbox" />

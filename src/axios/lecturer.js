@@ -622,6 +622,23 @@ let saveAtRiskStudents = async (dataSTD,assignId, token) =>{
     }
 }
 
+let getDataSets = async (token) => {
+  try {
+    const response = await axios.post(`${url}/dataSet/getDataSets2`,{},
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
 
 
 export {
@@ -657,5 +674,6 @@ export {
   getRecentSTDSubmissions,
   getAssignedAssignmentsStats,
   getStudentsStats,
-  saveAtRiskStudents
+  saveAtRiskStudents,
+  getDataSets
 }

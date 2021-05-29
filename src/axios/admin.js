@@ -590,6 +590,96 @@ let removeTeacher = async (lecturerId,token) => {
   }
 }
 
+let getDataSets = async (token) => {
+  try {
+    const response = await axios.post(`${url}/dataSet/getDataSets`,{},
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let getDataSet = async (datasetId,token) => {
+  try {
+    const response = await axios.post(`${url}/dataSet/getDataSet`,{
+      datasetId:datasetId
+    },
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let uopdateDataSetWOF = async (data,token) => {
+  try {
+    const response = await axios.patch(`${url}/dataSet/uopdateDataSetWOF`,
+      data,
+    {
+      headers:{
+        Authorization: token
+      }
+    }
+    );
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let uopdateDataSetWF = async (data, token) =>{
+  try {
+      const response = await axios.patch(`${url}/dataSet/uopdateDataSetWF`,
+        data
+      ,{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let removeDataSet = async (datasetId,token) => {
+  try {
+    await axios.delete(`${url}/dataSet/deleteDs`, {
+      headers: {
+        Authorization: token
+      },
+      data: {
+        datasetId: datasetId
+      }
+    });
+    
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
 export {
   getUser,
   getLecturerList,
@@ -620,5 +710,11 @@ export {
   removeTeacher,
   getLecturerAssignedSection,
   updateSubject,
-  saveDataSet
+  saveDataSet,
+  getStudent,
+  getDataSets,
+  getDataSet,
+  removeDataSet,
+  uopdateDataSetWOF,
+  uopdateDataSetWF
 }

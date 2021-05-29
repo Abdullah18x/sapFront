@@ -89,39 +89,39 @@ class AtRiskStudents extends Component{
             <tbody>
               
             {
-                        this.state.atRiskStudents.map((data, index) => {
-                          return (
-                            <tr key={index}>
-                              <td>{data.studentId}</td>
-                              <td>{data.name}</td>
-                              <td>{data.rollNo}</td>
-                              <td>{data.email}</td>
-                              <td>{data.section}</td>
-                              <td>{data.subject}</td>
-                              <td>
-                                <div className="dropdown dropdown-animated scale-left">
-                                    <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i className="anticon anticon-ellipsis" />
-                                    </a>
-                                    <div className="dropdown-menu">
-                                    <Link 
-                                        className="dropdown-item"
-                                        to='/admin/lecturerStudents'
-                                        state={{
-                                            
-                                        }}
-                                        >
-                                        <i className="anticon anticon-eye" />
-                                        <span className="m-l-10">View Profile</span>
-                                    </Link>
-                                    
-                                    </div>
-                                </div>
-                                </td>
-                            </tr>
-                          )
-                        })
-                      }
+              this.state.atRiskStudents.map((data, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{data.studentId}</td>
+                    <td>{data.name}</td>
+                    <td>{data.rollNo}</td>
+                    <td>{data.email}</td>
+                    <td>{data.section}</td>
+                    <td>{data.subject}</td>
+                    <td>
+                      <div className="dropdown dropdown-animated scale-left">
+                          <a className="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                          <i className="anticon anticon-ellipsis" />
+                          </a>
+                          <div className="dropdown-menu">
+                          <Link 
+                              className="dropdown-item"
+                              to='/admin/lecturerStudents'
+                              state={{
+                                  
+                              }}
+                              >
+                              <i className="anticon anticon-eye" />
+                              <span className="m-l-10">View Profile</span>
+                          </Link>
+                          
+                          </div>
+                      </div>
+                      </td>
+                  </tr>
+                )
+              })
+            }
               
             </tbody>
             <tfoot>
