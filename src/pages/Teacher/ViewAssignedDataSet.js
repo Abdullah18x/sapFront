@@ -4,7 +4,7 @@ const ls = require("local-storage");
 const auth = require("../../axios/auth");
 const lecturer = require("../../axios/lecturer");
 
-class ViewAssignedAssignment extends Component {
+class ViewAssignedDataSet extends Component {
   state = {
     lecturerId: ls.get("teacherId"),
     userType: ls.get("userType"),
@@ -51,43 +51,42 @@ class ViewAssignedAssignment extends Component {
     // }
   };
 
-  getAssignment = async () => {
+  getDataSet = async () => {
     try {
-      let assignmentId = this.props.location.state.assignmentId;
-      let returnedAssignment = await lecturer.getAssignment(
-        assignmentId,
+      let datasetId = this.props.location.state.datasetId;
+      let returnedDataSet = await lecturer.getDataSet(
+        datasetId,
         this.state.token
       );
 
-      let removedNewLines = returnedAssignment[0].resourceLinks.replace(
+      let removedNewLines = returnedDataSet[0].resourceLinks.replace(
         /[\r\n]+/g,
         " "
       );
       let links = removedNewLines.split(" ");
-      console.log(returnedAssignment);
+      console.log(returnedDataSet);
       this.setState({
-        title: returnedAssignment[0].title,
-        describe: returnedAssignment[0].details,
+        title: returnedDataSet[0].title,
+        describe: returnedDataSet[0].details,
         links: links,
-        resourceMaterial: returnedAssignment[0].resourceMaterial,
-        totalMarks: returnedAssignment[0].totalMarks,
-        solution: returnedAssignment[0].solution,
+        resourceMaterial: returnedDataSet[0].resourceMaterial,
+        totalMarks: returnedDataSet[0].totalMarks,
+        solution: returnedDataSet[0].solution,
       });
     } catch (error) {}
   };
 
-  getSubmittedAssignments = async () => {
+  getSubmittedDataSets = async () => {
     try {
-      let returnedSubmittedAssignments = await lecturer.getSubmittedAssignments(
-        this.state.lecturerId,
-        this.props.location.state.assignedId,
+      let getSubmittedDataSets = await lecturer.getSubmittedDataSets(
+        this.props.location.state.assignedSId,
         this.state.token
       );
-      let submissions = returnedSubmittedAssignments.length;
-      console.log(returnedSubmittedAssignments);
+      let submissions = getSubmittedDataSets.length;
+      console.log(getSubmittedDataSets);
       this.setState({
         submissions: submissions,
-        submittedAssignments: returnedSubmittedAssignments,
+        submittedAssignments: getSubmittedDataSets,
       });
     } catch (error) {
       console.log(error);
@@ -96,9 +95,8 @@ class ViewAssignedAssignment extends Component {
 
   getPendingStudents = async () => {
     try {
-      let returnedPendingStudents = await lecturer.getPendingStudents(
-        this.props.location.state.assignedId,
-        this.state.lecturerId,
+      let returnedPendingStudents = await lecturer.getPendingStudents2(
+        this.props.location.state.assignedSId,
         this.state.token
       );
       console.log(returnedPendingStudents);
@@ -111,13 +109,13 @@ class ViewAssignedAssignment extends Component {
     }
   };
 
-  deleteSubmission = async (submissionId) => {
+  deleteSubmission = async (submissionSId) => {
     try {
-      let deleteSubmission = await lecturer.deleteStudentSubmission(
-        submissionId,
+      let deleteSubmission = await lecturer.deleteStudentSubmission2(
+        submissionSId,
         this.state.token
       );
-      this.getSubmittedAssignments();
+      this.getSubmittedDataSets();
       this.getPendingStudents();
     } catch (error) {}
   };
@@ -132,14 +130,14 @@ class ViewAssignedAssignment extends Component {
     return a;
   };
 
-  getAssignedAssignment = async () => {
+  getAssignedDataSet = async () => {
     try {
-      let returnedAssignment = await lecturer.getAssignedAssignment(
-        this.props.location.state.assignedId,
+      let getAssignedDataSet = await lecturer.getAssignedDataSet(
+        this.props.location.state.assignedSId,
         this.state.token
       );
-      console.log(returnedAssignment);
-      let dueDate = this.formatDate(returnedAssignment[0].due);
+      console.log(getAssignedDataSet);
+      let dueDate = this.formatDate(getAssignedDataSet[0].due);
       this.setState({
         dueDate: dueDate,
       });
@@ -202,9 +200,9 @@ class ViewAssignedAssignment extends Component {
       this.verification();
     }
     if (this.state.loggedIn) {
-      this.getAssignment();
-      this.getAssignedAssignment();
-      this.getSubmittedAssignments();
+      this.getDataSet();
+      this.getAssignedDataSet();
+      this.getSubmittedDataSets();
       this.getPendingStudents();
     }
   }
@@ -385,11 +383,11 @@ class ViewAssignedAssignment extends Component {
                                                 </Link>
                                                 <Link
                                                   className="dropdown-item"
-                                                  to="/teacher/studentSubmission"
+                                                  to="/teacher/studentSubmission2"
                                                   state={{
-                                                    assignedId: data.assignedId,
-                                                    assignmentId:
-                                                      data.assignmentId,
+                                                    assignedSId: data.assignedSId,
+                                                    datasetId:
+                                                      data.datasetId,
                                                     studentId: data.studentId,
                                                   }}
                                                 >
@@ -401,7 +399,7 @@ class ViewAssignedAssignment extends Component {
                                                 <button
                                                   onClick={() => {
                                                     this.deleteSubmission(
-                                                      data.submissionId
+                                                      data.submissionSId
                                                     );
                                                   }}
                                                   className="dropdown-item"
@@ -590,4 +588,4 @@ class ViewAssignedAssignment extends Component {
   }
 }
 
-export default ViewAssignedAssignment;
+export default ViewAssignedDataSet;

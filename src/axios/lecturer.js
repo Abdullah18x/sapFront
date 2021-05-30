@@ -639,6 +639,183 @@ let getDataSets = async (token) => {
   }
 }
 
+let assignDataSet = async (lecturerId, datasetId,sectionId,subjectId,due, token) =>{
+  try {
+      const response = await axios.post(`${url}/dataSet/assignDataSet`,{
+        lecturerId:lecturerId,
+        datasetId:datasetId,
+        sectionId:sectionId,
+        subjectId:subjectId,
+        due:due
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getDataSet = async (datasetId, token) => {
+  try {
+    const response = await axios.post(
+      `${url}/dataSet/getDataSet2`,
+      {
+        datasetId: datasetId,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getAssignedDataSets = async (lecturerId, token) => {
+  try {
+    const response = await axios.post(
+      `${url}/dataSet/getAssignedDataSets`,
+      {
+        lecturerId: lecturerId,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getAssignedDataSet = async (assignedSId, token) => {
+  try {
+    const response = await axios.post(
+      `${url}/dataSet/getPendingStudents`,
+      {
+        assignedSId:assignedSId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getSubmittedDataSets = async (assignedSId, token) => {
+  try {
+    const response = await axios.post(
+      `${url}/dataSet/getSubmittedDataSets`,
+      {
+        assignedSId:assignedSId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getPendingStudents2 = async (assignedSId, token) => {
+  try {
+    const response = await axios.post(
+      `${url}/dataSet/getPendingStudents`,
+      {
+        assignedSId:assignedSId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let deleteStudentSubmission2 = async (submissionSId,token) => {
+  try {
+    await axios.delete(`${url}/dataSet/deleteStudentSubmission`, {
+      headers: {
+        Authorization: token
+      },
+      data: {
+        submissionSId:submissionSId
+      }
+    });
+    
+  } catch (error) {
+    console.log(error)
+    return error
+    
+  }
+}
+
+let getStudentSubmission2 = async (studentId,assignedSId, token) =>{
+  try {
+      const response = await axios.post(`${url}/dataSet/getStudentSubmission`,{
+        studentId:studentId,
+        assignedSId:assignedSId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let gradeAssignment2 = async (submissionSId,marksObtained, token) =>{
+  try {
+      const response = await axios.patch(`${url}/dataSet/gradeAssignment`,{
+        submissionSId:submissionSId,
+        marksObtained:marksObtained
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
 
 
 export {
@@ -675,5 +852,14 @@ export {
   getAssignedAssignmentsStats,
   getStudentsStats,
   saveAtRiskStudents,
-  getDataSets
+  getDataSets,
+  assignDataSet,
+  getDataSet,
+  getAssignedDataSets,
+  getAssignedDataSet,
+  getSubmittedDataSets,
+  getPendingStudents2,
+  deleteStudentSubmission2,
+  getStudentSubmission2,
+  gradeAssignment2
 }

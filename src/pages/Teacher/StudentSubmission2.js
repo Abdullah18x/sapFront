@@ -23,7 +23,7 @@ class StudentSubmission extends Component {
     timeTaken: 0,
     noOfErrors: 0,
     errors: [],
-    submissionId: 0,
+    submissionSId: 0,
     loggedIn: true,
   };
 
@@ -45,39 +45,39 @@ class StudentSubmission extends Component {
       }
     }
   };
-  getAssignment = async () => {
+  getDataSet = async () => {
     try {
-      let assignmentId = this.props.location.state.assignmentId;
-      let returnedAssignment = await lecturer.getAssignment(
-        assignmentId,
+      let datasetId = this.props.location.state.datasetId;
+      let returnedDataSet = await lecturer.getDataSet(
+        datasetId,
         this.state.token
       );
 
-      let removedNewLines = returnedAssignment[0].resourceLinks.replace(
+      let removedNewLines = returnedDataSet[0].resourceLinks.replace(
         /[\r\n]+/g,
         " "
       );
       let links = removedNewLines.split(" ");
-      console.log(returnedAssignment);
+      console.log(returnedDataSet);
       this.setState({
-        title: returnedAssignment[0].title,
-        describe: returnedAssignment[0].details,
+        title: returnedDataSet[0].title,
+        describe: returnedDataSet[0].details,
         links: links,
-        resourceMaterial: returnedAssignment[0].resourceMaterial,
-        totalMarks: returnedAssignment[0].totalMarks,
-        solution: returnedAssignment[0].solution,
+        resourceMaterial: returnedDataSet[0].resourceMaterial,
+        totalMarks: returnedDataSet[0].totalMarks,
+        solution: returnedDataSet[0].solution,
       });
     } catch (error) {}
   };
 
   markAssignment = async () => {
     try {
-      let mark = await lecturer.gradeAssignment(
-        this.state.submissionId,
+      let mark = await lecturer.gradeAssignment2(
+        this.state.submissionSId,
         this.state.marksObtained,
         this.state.token
       );
-      this.getAssignment();
+      this.getDataSet();
     } catch (error) {
       console.location(error);
     }
@@ -88,7 +88,7 @@ class StudentSubmission extends Component {
     if (Number.isInteger(parseInt(num))) {
       if (parseInt(num) > -1 && parseInt(num) <= this.state.totalMarks) {
         this.setState({
-          marksObtained: num,
+          marksObtained: num
         });
       }
     }
@@ -96,18 +96,20 @@ class StudentSubmission extends Component {
 
   getStudentSubmission = async () => {
     try {
-      let getStudentSolution = await lecturer.getStudentSubmission(
+      let getStudentSolution = await lecturer.getStudentSubmission2(
         this.props.location.state.studentId,
-        this.props.location.state.assignedId,
+        this.props.location.state.assignedSId,
         this.state.token
       );
+      console.log(this.props.location.state.studentId)
+      console.log(this.props.location.state.assignedSId)
       console.log(getStudentSolution);
       this.setState({
         studentSolution: getStudentSolution[0].solution,
         marksObtained: getStudentSolution[0].marksObtained,
         name: getStudentSolution[0].name,
         rollNo: getStudentSolution[0].rollNo,
-        submissionId: getStudentSolution[0].submissionId,
+        submissionSId: getStudentSolution[0].submissionSId,
         timeTaken: getStudentSolution[0].timeTaken,
         noOfErrors: getStudentSolution[0].errorsNo,
         errors: getStudentSolution[0].errorsList,
@@ -141,7 +143,7 @@ class StudentSubmission extends Component {
       this.verification();
     }
     if (this.state.loggedIn) {
-      this.getAssignment();
+      this.getDataSet();
       this.getStudentSubmission();
     }
   }
