@@ -15,6 +15,7 @@ import StudentAllAssignments from "./pages/Student/StudentAllAssignments.js";
 import StudentViewAssignments from "./pages/Student/StudentViewAssignments.js";
 import StudentProfile from "./pages/Student/StudentProfile.js";
 import ViewAssignmentStd from "./pages/Student/ViewAssignment";
+import ViewDataSet from './pages/Student/ViewDataSet'
 import IDE from "./pages/IDE.js";
 
 import AdminDashboard from "./pages/Admin/AdminDashboard.js";
@@ -78,6 +79,7 @@ function App() {
         <StudentViewAssignments path="/view-assignment" />
         <StudentProfile path="/profile" />
         <ViewAssignmentStd path="/viewAssignment" />
+        <ViewDataSet path='/stdViewDataSet'/>
         <Settings path="/settings" />
       </StudentHeader>
 
