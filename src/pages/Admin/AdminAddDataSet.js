@@ -344,7 +344,7 @@ class AdminAddDataSet extends Component{
                     <label htmlFor="MC" className="p-l-10">Multiple Classes </label>
                     
                 </div>
-                <div className="form-group col-md-2">
+                {/* <div className="form-group col-md-2">
                     <br/>
                     <input value={1} id="Methods" type="checkbox" onClick={(e) => this.setMethods(e)}/>
                     <label htmlFor="Methods" className="p-l-10">Methods</label>
@@ -355,7 +355,7 @@ class AdminAddDataSet extends Component{
                     <input value={1} id="Arrays" type="checkbox" onClick={(e) => this.setArrays(e)}/>
                     <label htmlFor="Arrays" className="p-l-10">Arrays</label>
                     
-                </div>
+                </div> */}
             </div>
             <div className="form-row">
             
