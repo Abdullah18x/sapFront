@@ -1,18 +1,25 @@
 import React, { Component } from "react";
-import { Link } from "@reach/router";
+import TeacherList from "../../components/TeacherList";
+import { Link, Redirect } from "@reach/router";
 var ls = require("local-storage");
 const auth = require("../../axios/auth");
 const admin = require("../../axios/admin");
 
-class LecturerStudents extends Component {
+class ViewDataSets extends Component {
   state = {
     adminId: ls.get("adminId"),
     userType: ls.get("userType"),
     token: ls.get("token"),
-    section: "",
-    lecturerName: "",
-    lecturerStudents: [],
+    dataSets: [],
     loggedIn: true,
+  };
+
+  viewDatSets = async () => {
+    let returnedDataSets = await admin.getDataSets(this.state.token);
+    console.log(returnedDataSets);
+    this.setState({
+      dataSets: returnedDataSets,
+    });
   };
 
   verification = async () => {
@@ -34,33 +41,11 @@ class LecturerStudents extends Component {
     }
   };
 
-  setStudents = async () => {
+  deleteDatSet = async (datasetId) => {
     try {
-      let sectionId = this.props.location.state.sectionId;
-      let lecturerId = this.props.location.state.lecturerId;
-      let assignId = this.props.location.state.assignId;
-      let section = await admin.getSection(sectionId, this.state.token);
-      let returnedStudents = await admin.getLecturerStudents(
-        lecturerId,
-        assignId,
-        this.state.token
-      );
-      if (returnedStudents[0].studentId != null) {
-        this.setState({
-          section: section[0].section,
-          lecturerStudents: returnedStudents,
-        });
-      }else{
-        this.setState({
-          section: section[0].section
-        });
-      }
-      
-      console.log(returnedStudents);
-    } catch (error) {
-      //   window.location.href='/error'
-      console.log(error);
-    }
+      await admin.removeDataSet(datasetId, this.state.token);
+      this.viewDatSets();
+    } catch (error) {}
   };
 
   componentDidMount() {
@@ -80,7 +65,7 @@ class LecturerStudents extends Component {
       this.verification();
     }
     if (this.state.loggedIn) {
-      this.setStudents();
+      this.viewDatSets();
     }
   }
 
@@ -97,49 +82,39 @@ class LecturerStudents extends Component {
                     Home
                   </a>
                   <a className="breadcrumb-item" href="#">
-                    Sections
+                    Teachers
                   </a>
                   <span className="breadcrumb-item active">
-                    Section Details
+                    View All Teachers
                   </span>
                 </nav>
               </div>
             </div>
-            <h3
-              style={{ textAlign: "left", paddingLeft: "6px" }}
-              className="m-b-25"
-            >
-              Section: {this.state.section}
-            </h3>
             <div className="card">
               <div className="card-body">
-                <h4>Students</h4>
+                <h4>View All DataSets</h4>
                 <div className="m-t-25">
                   <table id="data-table" className="table">
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Roll No</th>
-                        <th>Status</th>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Total Marks</th>
+                        <th>Time Needed to solve</th>
                         <th>Action</th>
                       </tr>
                     </thead>
 
                     <tbody>
-                      {this.state.lecturerStudents.map((data, index) => {
-                        let atRisk = "Not At Risk";
-                        if (data.atRisk === 1) {
-                          atRisk = "At Risk";
-                        }
+                      {this.state.dataSets.map((data, index) => {
                         return (
                           <tr key={index}>
-                            <td>{data.studentId}</td>
-                            <td>{data.name}</td>
-                            <td>{data.email}</td>
-                            <td>{data.rollNo}</td>
-                            <td>{atRisk}</td>
+                            <td>{data.datasetId}</td>
+                            <td>{data.title}</td>
+                            <td>{data.subject}</td>
+                            <td>{data.totalMarks}</td>
+                            <td>{data.timeNeeded} minutes</td>
                             <td>
                               <div className="dropdown dropdown-animated scale-left">
                                 <a
@@ -152,15 +127,24 @@ class LecturerStudents extends Component {
                                 <div className="dropdown-menu">
                                   <Link
                                     className="dropdown-item"
-                                    to="/admin/studentProfile"
+                                    to="/admin/dataSet"
                                     state={{
-                                      studentId:data.studentId,
-                                      lecturerId:this.props.location.state.lecturerId
+                                      datasetId: data.datasetId,
                                     }}
                                   >
                                     <i className="anticon anticon-eye" />
-                                    <span className="m-l-10">View Profile</span>
+                                    <span className="m-l-10">View</span>
                                   </Link>
+                                  <button
+                                    onClick={() => {
+                                      this.deleteDatSet(data.datasetId);
+                                    }}
+                                    className="dropdown-item"
+                                    type="button"
+                                  >
+                                    <i className="anticon anticon-delete" />
+                                    <span className="m-l-10">Delete</span>
+                                  </button>
                                 </div>
                               </div>
                             </td>
@@ -172,9 +156,8 @@ class LecturerStudents extends Component {
                       <tr>
                         <th>ID</th>
                         <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Roll No</th>
-                        <th>Status</th>
+                        <th>Section</th>
+                        <th>Subject</th>
                         <th>Action</th>
                       </tr>
                     </tfoot>
@@ -204,4 +187,4 @@ class LecturerStudents extends Component {
   }
 }
 
-export default LecturerStudents;
+export default ViewDataSets;

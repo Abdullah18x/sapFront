@@ -15,7 +15,7 @@ import StudentAllAssignments from "./pages/Student/StudentAllAssignments.js";
 import StudentViewAssignments from "./pages/Student/StudentViewAssignments.js";
 import StudentProfile from "./pages/Student/StudentProfile.js";
 import ViewAssignmentStd from "./pages/Student/ViewAssignment";
-import ViewDataSet from './pages/Student/ViewDataSet'
+import ViewDataSet from "./pages/Student/ViewDataSet";
 import IDE from "./pages/IDE.js";
 
 import AdminDashboard from "./pages/Admin/AdminDashboard.js";
@@ -36,8 +36,10 @@ import AdminAddStudent from "./pages/Admin/AdminAddStudent";
 import StudentProfile3 from "./pages/Admin/StudentProfile.js";
 import ViewStudents from "./pages/Admin/StudentsList";
 import AdminAddDataSet from "./pages/Admin/AdminAddDataSet.js";
-import ViewDataSets from "./pages/Admin/AdminViewDataSet";
+import ViewDataSets from "./pages/Admin/AdminViewDataSets";
 import AdminViewSingleDataSet from "./pages/Admin/AdminViewSIngleDataSet";
+import StudentSubmissionA from "./pages/Admin/StudentSubmission";
+import StudentSubmission2A from "./pages/Admin/StudentSubmission2";
 
 import TeacherDashboard from "./pages/Teacher/TeacherDashboard.js";
 import TeacherAddAssignments from "./pages/Teacher/TeacherAddAssignments.js";
@@ -53,13 +55,13 @@ import ViewAssignment from "./pages/Teacher/ViewAssignment";
 import UpdateAssignment from "./pages/Teacher/UpdateAssignment";
 import TeacherAssignedAssignments from "./pages/Teacher/AssignedAssignments";
 import ViewAssignedAssignment from "./pages/Teacher/ViewAssignedAssignment";
-import ViewAssignedDataSet from './pages/Teacher/ViewAssignedDataSet'
+import ViewAssignedDataSet from "./pages/Teacher/ViewAssignedDataSet";
 import StudentProfile2 from "./pages/Teacher/StudentProfile.js";
 import StudentCallibration from "./pages/Teacher/CallibrateStundents";
 import ErrorPage from "./pages/error.js";
 import StudentSubmission from "./pages/Teacher/StudentSubmission";
-import StudentSubmission2 from './pages/Teacher/StudentSubmission2'
-import TeacherViewSingleDataSet from './pages/Teacher/TeacherViewDataSet'
+import StudentSubmission2 from "./pages/Teacher/StudentSubmission2";
+import TeacherViewSingleDataSet from "./pages/Teacher/TeacherViewDataSet";
 
 import Settings from "./pages/Settings.js";
 import Search from "./components/Search.js";
@@ -79,7 +81,7 @@ function App() {
         <StudentViewAssignments path="/view-assignment" />
         <StudentProfile path="/profile" />
         <ViewAssignmentStd path="/viewAssignment" />
-        <ViewDataSet path='/stdViewDataSet'/>
+        <ViewDataSet path="/stdViewDataSet" />
         <Settings path="/settings" />
       </StudentHeader>
 
@@ -105,6 +107,8 @@ function App() {
         <AdminAddStudent path="/addStudent" />
         <StudentProfile3 path="/studentProfile" />
         <ViewStudents path="/viewStudents" />
+        <StudentSubmissionA path='/studentSubmission'/>
+        <StudentSubmission2A path='/studentSubmission2'/>
       </AdminHeader>
 
       <TeacherHeader path="/teacher/">
@@ -126,8 +130,8 @@ function App() {
         <StudentSubmission2 path="/studentSubmission2" />
         <StudentProfile2 path="/studentProfile" />
         <StudentCallibration path="/studentCallibration" />
-        <TeacherViewSingleDataSet path='/viewDataSet'/>
-        <ViewAssignedDataSet path='/viewAssignedDataSet' />
+        <TeacherViewSingleDataSet path="/viewDataSet" />
+        <ViewAssignedDataSet path="/viewAssignedDataSet" />
         <Settings path="/settings" />
       </TeacherHeader>
     </Router>

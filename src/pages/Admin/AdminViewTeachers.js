@@ -36,9 +36,9 @@ class Viewteacher extends Component{
     }
   }
 
-  assignLecturerSection(lecturerId){
+  // assignLecturerSection(lecturerId){
 
-  }
+  // }
   
   deletelecturer = async (lecturerId) => {
     try {
@@ -88,6 +88,7 @@ class Viewteacher extends Component{
                 <tr>
                   <th>ID</th>
                   <th>Full Name</th>
+                  <th>User Name</th>
                   <th>Email</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -97,13 +98,18 @@ class Viewteacher extends Component{
               <tbody>
                 {
                   this.state.teachers.map((data, index) => {
+                    let status = 'Un Assigned'
+                    if (data.status === 1) {
+                      status = 'Assigned'
+                    }
                     return (
                       <TeacherList 
                         key={index}
                         id={data.lecturerId}
-                        name={data.userName}
+                        name={data.name}
+                        userName={data.userName}
                         email={data.email}
-                        status={data.status}
+                        status={status}
                         deleteLecturer={() => {this.deletelecturer(data.lecturerId)}}
 
                       />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from '@reach/router'
 const ls = require('local-storage')
 const auth = require('../../axios/auth')
 const admin = require('../../axios/admin')
@@ -170,7 +171,13 @@ class AdminDashboard extends Component {
                 <div className="d-flex justify-content-between align-items-center">
                   <h5>Recent Sections</h5>
                   <div>
-                    <button type='button' onClick={this.goToSections} className="btn btn-sm btn-default">View All</button>
+                    {/* <button type='button' onClick={this.goToSections} className="btn btn-sm btn-default">View All</button> */}
+                    <Link 
+                          className="btn btn-sm btn-default"
+                          to='/admin/sections'
+                        >
+                          View All
+                      </Link>
                   </div>
                 </div>
                 <div className="m-t-30">
@@ -213,7 +220,12 @@ class AdminDashboard extends Component {
                 <div className="d-flex justify-content-between align-items-center">
                   <h5>Teachers | At Risk Students</h5>
                   <div>
-                    <a href="javascript:void(0);" className="btn btn-sm btn-default">View All</a>
+                  <Link 
+                          className="btn btn-sm btn-default"
+                          to='/admin/teachersWithARS'
+                        >
+                          View All
+                      </Link>
                   </div>
                 </div>
                 <div className="m-t-30">

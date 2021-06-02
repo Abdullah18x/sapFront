@@ -258,7 +258,7 @@ let addStudent = async (userName, password, email, name, rollNo, token) => {
 
 let getStudent = async (studentId, token) => {
   try {
-    await axios.post(
+    let response =  await axios.post(
       `${url}/student/fetchStudentA`,
       {
         studentId: studentId,
@@ -269,6 +269,7 @@ let getStudent = async (studentId, token) => {
         },
       }
     );
+    return response.data
   } catch (error) {
     console.log(error);
     return error;
@@ -295,6 +296,46 @@ let getLecturerByUserName = async (userName, token) => {
   }
 };
 
+let getRecentStudentSubmissions = async (studentId, token) => {
+  try {
+    let response = await axios.post(
+      `${url}/assignment/getRecentStudentSubmissions`,
+      {
+        studentId: studentId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getRecentStudentSubmissionsD = async (studentId, token) => {
+  try {
+    let response = await axios.post(
+      `${url}/dataSet/getRecentStudentSubmissions`,
+      {
+        studentId: studentId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 let assignLecturer = async (
   lecturerId,
   subjectId,
@@ -310,6 +351,28 @@ let assignLecturer = async (
         subjectId: subjectId,
         sectionId: sectionId,
         programmingLanguageId: programmingLanguageId,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let updateLecturer = async (lecturerId, name, email, password, token) => {
+  try {
+    await axios.patch(
+      `${url}/lecturer/updateLecturer`,
+      {
+        lecturerId: lecturerId,
+        name: name,
+        email: email,
+        password: password,
       },
       {
         headers: {
@@ -569,14 +632,13 @@ let getStudents = async (token) => {
   }
 };
 
-let unAssignTeacher = async (lecturerId, sectionId, subjectId, token) => {
+let unAssignTeacher = async (lecturerId, assignId, token) => {
   try {
     let response = await axios.post(
       `${url}/lecturer/unAssignLecturer`,
       {
         lecturerId: lecturerId,
-        sectionId: sectionId,
-        subjectId: subjectId,
+        assignId: assignId
       },
       {
         headers: {
@@ -697,6 +759,62 @@ let removeDataSet = async (datasetId, token) => {
   }
 };
 
+let getAssignment = async (assignmentId, token) =>{
+  try {
+      const response = await axios.post(`${url}/assignment/getAssignmentA`,{
+        assignmentId:assignmentId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getStudentSubmission = async (studentId,assignedId, token) =>{
+  try {
+      const response = await axios.post(`${url}/assignment/getStudentSubmissionA`,{
+        studentId:studentId,
+        assignedId:assignedId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
+let getStudentSubmission2 = async (studentId,assignedSId, token) =>{
+  try {
+      const response = await axios.post(`${url}/dataSet/getStudentSubmissionA`,{
+        studentId:studentId,
+        assignedSId:assignedSId
+      },{
+        headers:{
+          Authorization: token
+        }
+      }
+      );
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return error
+      
+    }
+}
+
 export {
   getUser,
   getLecturerList,
@@ -734,4 +852,10 @@ export {
   removeDataSet,
   uopdateDataSetWOF,
   uopdateDataSetWF,
+  updateLecturer,
+  getRecentStudentSubmissions,
+  getRecentStudentSubmissionsD,
+  getAssignment,
+  getStudentSubmission,
+  getStudentSubmission2
 };

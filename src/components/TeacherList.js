@@ -6,6 +6,7 @@ const viewTeacherList = (props) => {
         <tr>
                   <td>{props.id}</td>
                   <td>{props.name}</td>
+                  <td>{props.userName}</td>
                   <td>{props.email}</td>
                   <td>{props.status}</td>
                   <td>
