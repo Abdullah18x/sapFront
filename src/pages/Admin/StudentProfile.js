@@ -16,8 +16,8 @@ class StudentProfile extends Component {
     subjects: [],
     atRiskStatus: "Not At Risk",
     recentSubmission: [],
-    assignments:[],
-    option:1,
+    assignments: [],
+    option: 1,
     loggedIn: true,
   };
 
@@ -39,8 +39,6 @@ class StudentProfile extends Component {
       }
     }
   };
-
- 
 
   getStudent = async () => {
     let returnedStudent = await admin.getStudent(
@@ -81,20 +79,26 @@ class StudentProfile extends Component {
   //   }
 
   setAssignments = async () => {
-    let returnedAssignments = await admin.getRecentStudentSubmissions(this.props.location.state.studentId, this.state.token)
-    console.log(returnedAssignments)
+    let returnedAssignments = await admin.getRecentStudentSubmissions(
+      this.props.location.state.studentId,
+      this.state.token
+    );
+    console.log(returnedAssignments);
     this.setState({
-      assignments:returnedAssignments
-    })
-  }
+      assignments: returnedAssignments,
+    });
+  };
 
   setDataSets = async () => {
-    let returnedDataSets = await admin.getRecentStudentSubmissionsD(this.props.location.state.studentId, this.state.token)
-    console.log(returnedDataSets)
+    let returnedDataSets = await admin.getRecentStudentSubmissionsD(
+      this.props.location.state.studentId,
+      this.state.token
+    );
+    console.log(returnedDataSets);
     this.setState({
-      assignments:returnedDataSets
-    })
-  }
+      assignments: returnedDataSets,
+    });
+  };
 
   formatDate = (date) => {
     let format = date.replace("T", " ").replace(".000Z", "");
@@ -331,7 +335,7 @@ class StudentProfile extends Component {
     if (this.state.loggedIn) {
       this.getStudent();
       //this.getRecentSTDSubmissions()
-      this.setAssignments()
+      this.setAssignments();
     }
   }
 
@@ -447,27 +451,27 @@ class StudentProfile extends Component {
                   <div className="card">
                     <div className="card-body">
                       <div className="row">
-                      <div className="col-md-8">
-                        <h4>Recent Submissions</h4>
+                        <div className="col-md-8">
+                          <h4>Recent Submissions</h4>
+                        </div>
+                        <div className="col-md-4">
+                          <select
+                            id="inputState"
+                            className="form-control"
+                            onChange={(e) => {
+                              this.changeAssignments(e);
+                            }}
+                          >
+                            <option value="assignments" selected>
+                              Assignments
+                            </option>
+                            <option value="dataSets">Data Sets</option>
+                          </select>
+                        </div>
                       </div>
-                      <div className="col-md-4">
-                        <select
-                          id="inputState"
-                          className="form-control"
-                          onChange={(e) => {
-                            this.changeAssignments(e);
-                          }}
-                        >
-                          <option value="assignments" selected>
-                            Assignments
-                          </option>
-                          <option value="dataSets">Data Sets</option>
-                        </select>
-                      </div>
-                    </div>
                       {this.state.option
-                      ? this.renderAssignments()
-                      : this.renderDataSets()}
+                        ? this.renderAssignments()
+                        : this.renderDataSets()}
                     </div>
                   </div>
                 </div>

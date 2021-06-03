@@ -206,10 +206,20 @@ class TeacherAssignments extends Component {
         return;
       }
       let dueDate = this.state.dueDate.concat(" ".concat(this.state.dueTime));
+      let checkAssigned = await lecturer.checkAssigned(
+        this.state.toBeAssignedId,
+        this.state.section,
+        this.state.section,
+        this.state.token
+      );
+      if (checkAssigned.length > 0) {
+        alert("This Assignments is already assigned to this section");
+        return;
+      }
       let assignAssignment = await lecturer.assignAssignment(
         this.state.toBeAssignedId,
         this.state.section,
-        this.state.subject,
+        this.state.section,
         dueDate,
         this.state.token
       );
@@ -236,6 +246,16 @@ class TeacherAssignments extends Component {
         return;
       }
       if (this.state.toBeSetSubejectId === this.state.subject) {
+        let checkAssigned = await lecturer.checkAssigned2(
+          this.state.toBeAssignedId,
+          this.state.section,
+          this.state.section,
+          this.state.token
+        );
+        if (checkAssigned.length > 0) {
+          alert("This DataSet is already assigned to this section");
+          return;
+        }
         let dueDate = this.state.dueDate.concat(" ".concat(this.state.dueTime));
         let assignAssignment = await lecturer.assignDataSet(
           this.state.lecturerId,
@@ -247,9 +267,6 @@ class TeacherAssignments extends Component {
         );
         alert("assigned");
       } else {
-        console.log(typeof this.state.toBeSetSubejectId);
-        console.log(typeof this.state.subject);
-        console.log(this.state.toBeSetSubejectId === this.state.subject);
         alert("This data set is not built for the selected subject");
       }
     } catch (error) {
@@ -541,9 +558,7 @@ class TeacherAssignments extends Component {
                   </div>
                   <div class="modal-footer">
                     <button
-                      onClick={() => {
-                        this.reset();
-                      }}
+                      
                       type="button"
                       class="btn btn-secondary"
                       data-dismiss="modal"
@@ -660,9 +675,7 @@ class TeacherAssignments extends Component {
                   </div>
                   <div class="modal-footer">
                     <button
-                      onClick={() => {
-                        this.reset();
-                      }}
+                      
                       type="button"
                       class="btn btn-secondary"
                       data-dismiss="modal"

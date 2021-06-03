@@ -16,6 +16,7 @@ class StudentProfile extends Component {
     subjects: [],
     atRiskStatus: [],
     recentSubmission: [],
+    option:1,
     loggedIn: true,
   };
 
@@ -88,6 +89,18 @@ class StudentProfile extends Component {
     });
   };
 
+  getRecentSTDSubmissions2 = async () => {
+    let returnedSubmissions = await lecturer.getRecentSTDSubmissions2(
+      this.state.lecturerId,
+      this.props.location.state.studentId,
+      this.state.token
+    );
+    console.log(returnedSubmissions);
+    this.setState({
+      recentSubmission: returnedSubmissions,
+    });
+  };
+
   formatDate = (date) => {
     let format = date.replace("T", " ").replace(".000Z", "");
     return format;
@@ -127,6 +140,186 @@ class StudentProfile extends Component {
       this.getSubmittedAssignments();
     } catch (error) {}
   };
+
+  changeAssignments = async (e) => {
+    if (e.target.value === "assignments") {
+      this.setState({
+        option: 1,
+      });
+      this.getRecentSTDSubmissions();
+    } else {
+      this.setState({
+        option: 0,
+      });
+      this.getRecentSTDSubmissions2();
+    }
+  };
+
+  renderAssignments() {
+    return (
+      <div className="m-t-30">
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Submitted At</th>
+                <th>On Time / Late</th>
+                <th>Marks Obtained</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.recentSubmission.map((data, index) => {
+                let late = this.checkIfLateSubmission(
+                  this.formatDate(data.submittedAt),
+                  this.formatDate(data.due)
+                );
+                let marks = "Unchecked";
+                if (late === 1) {
+                  late = "Late Submission";
+                } else {
+                  late = "On Time";
+                }
+                if (data.checked === 1) {
+                  marks = data.marksObtained;
+                }
+                return (
+                  <tr key={index}>
+                    <td>{data.assignmentId}</td>
+                    <td>{data.title}</td>
+                    <td>{data.subject}</td>
+                    <td>{this.formatDate(data.submittedAt)}</td>
+                    <td>{late}</td>
+                    <td>{marks}</td>
+                    {/* <div className="d-flex align-items-center">
+                                                <span className="badge badge-success badge-dot m-r-10" />
+                                                <span>Approved</span>
+                                            </div> */}
+                    <td>
+                      <div className="dropdown dropdown-animated scale-left">
+                        <a
+                          className="text-gray font-size-18"
+                          href="javascript:void(0);"
+                          data-toggle="dropdown"
+                        >
+                          <i className="anticon anticon-ellipsis" />
+                        </a>
+                        <div className="dropdown-menu">
+                          <Link
+                            className="dropdown-item"
+                            to="/teacher/studentSubmission"
+                            state={{
+                              assignedId: data.assignedId,
+                              assignmentId: data.assignmentId,
+                              studentId: data.studentId,
+                            }}
+                          >
+                            <i className="anticon anticon-eye" />
+                            <span className="m-l-10">View Submission</span>
+                          </Link>
+                          {/* <button
+                            onClick={() => {
+                              this.deleteSubmission(data.submissionId);
+                            }}
+                            className="dropdown-item"
+                            type="button"
+                          >
+                            <i className="anticon anticon-delete" />
+                            <span className="m-l-10">Delete Submission</span>
+                          </button> */}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
+  renderDataSets() {
+    return (
+      <div className="m-t-30">
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Submitted At</th>
+                <th>On Time / Late</th>
+                <th>Marks Obtained</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.recentSubmission.map((data, index) => {
+                let late = this.checkIfLateSubmission(
+                  this.formatDate(data.submittedAt),
+                  this.formatDate(data.due)
+                );
+                let marks = "Unchecked";
+                if (late === 1) {
+                  late = "Late Submission";
+                } else {
+                  late = "On Time";
+                }
+                if (data.checked === 1) {
+                  marks = data.marksObtained;
+                }
+                return (
+                  <tr key={index}>
+                    <td>{data.datasetId}</td>
+                    <td>{data.title}</td>
+                    <td>{data.subject}</td>
+                    <td>{this.formatDate(data.submittedAt)}</td>
+                    <td>{late}</td>
+                    <td>{marks}</td>
+                    {/* <div className="d-flex align-items-center">
+                                                <span className="badge badge-success badge-dot m-r-10" />
+                                                <span>Approved</span>
+                                            </div> */}
+                    <td>
+                      <div className="dropdown dropdown-animated scale-left">
+                        <a
+                          className="text-gray font-size-18"
+                          href="javascript:void(0);"
+                          data-toggle="dropdown"
+                        >
+                          <i className="anticon anticon-ellipsis" />
+                        </a>
+                        <div className="dropdown-menu">
+                          <Link
+                            className="dropdown-item"
+                            to="/teacher/studentSubmission2"
+                            state={{
+                              assignedSId: data.assignedSId,
+                              datasetId: data.datasetId,
+                              studentId: data.studentId,
+                            }}
+                          >
+                            <i className="anticon anticon-eye" />
+                            <span className="m-l-10">View Submission</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
 
   componentDidMount() {
     if (
@@ -261,17 +454,29 @@ class StudentProfile extends Component {
                 <div className="col-lg-12">
                   <div className="card">
                     <div className="card-body">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h5>Recent Submissions</h5>
-                        <div>
-                          {/* <a href="javascript:void(0);" className="btn btn-sm btn-default">View All</a> */}
-
-                          {/* <Link className="btn btn-sm btn-default" to='/teacher/students'>
-                          View All
-                          </Link> */}
+                    <div className="row">
+                        <div className="col-md-8">
+                          <h4>Recent Submissions</h4>
+                        </div>
+                        <div className="col-md-4">
+                          <select
+                            id="inputState"
+                            className="form-control"
+                            onChange={(e) => {
+                              this.changeAssignments(e);
+                            }}
+                          >
+                            <option value="assignments" selected>
+                              Assignments
+                            </option>
+                            <option value="dataSets">Data Sets</option>
+                          </select>
                         </div>
                       </div>
-                      <div className="m-t-30">
+                      {this.state.option
+                        ? this.renderAssignments()
+                        : this.renderDataSets()}
+                      {/* <div className="m-t-30">
                         <div className="table-responsive">
                           <table className="table table-hover">
                             <thead>
@@ -313,10 +518,10 @@ class StudentProfile extends Component {
                                       </td>
                                       <td>{late}</td>
                                       <td>{marks}</td>
-                                      {/* <div className="d-flex align-items-center">
+                                      <div className="d-flex align-items-center">
                                           <span className="badge badge-success badge-dot m-r-10" />
                                           <span>Approved</span>
-                                      </div> */}
+                                      </div>
                                       <td>
                                         <div className="dropdown dropdown-animated scale-left">
                                           <a
@@ -365,7 +570,7 @@ class StudentProfile extends Component {
                             </tbody>
                           </table>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

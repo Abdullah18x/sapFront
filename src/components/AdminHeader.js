@@ -174,14 +174,14 @@ class AdminHeader extends Component {
                           />
                         </div>
                         <div className="m-l-10">
-                          <p className="m-b-0 text-dark font-weight-semibold">
+                          <p className="m-t-15 text-dark font-weight-semibold">
                             Ali Zain
                           </p>
-                          <p className="m-b-0 opacity-07">UI/UX Desinger</p>
+                          {/* <p className="m-b-0 opacity-07">UI/UX Desinger</p> */}
                         </div>
                       </div>
                     </div>
-                    <a
+                    {/* <a
                       href="javascript:void(0);"
                       className="dropdown-item d-block p-h-15 p-v-10"
                     >
@@ -192,7 +192,7 @@ class AdminHeader extends Component {
                         </div>
                         <i className="anticon font-size-10 anticon-right" />
                       </div>
-                    </a>
+                    </a> */}
                     <a
                       href="javascript:void(0);"
                       className="dropdown-item d-block p-h-15 p-v-10"
@@ -205,7 +205,7 @@ class AdminHeader extends Component {
                         <i className="anticon font-size-10 anticon-right" />
                       </div>
                     </a>
-                    <a
+                    {/* <a
                       href="javascript:void(0);"
                       className="dropdown-item d-block p-h-15 p-v-10"
                     >
@@ -216,7 +216,7 @@ class AdminHeader extends Component {
                         </div>
                         <i className="anticon font-size-10 anticon-right" />
                       </div>
-                    </a>
+                    </a> */}
                     <button
                       onClick={this.logout}
                       className="dropdown-item d-block p-h-15 p-v-10"
@@ -361,7 +361,7 @@ class AdminHeader extends Component {
                     </span>
                   </NavLink>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <NavLink
                     className="dropdown-toggle"
                     to="/admin/teachersWithARS"
@@ -374,8 +374,8 @@ class AdminHeader extends Component {
                       <i className="arrow-icon" />
                     </span>
                   </NavLink>
-                </li>
-                <li className="nav-item dropdown">
+                </li> */}
+                {/* <li className="nav-item dropdown">
                   <NavLink className="dropdown-toggle" to="/admin/profile">
                     <span className="icon-holder">
                       <i className="anticon anticon-lock" />
@@ -396,7 +396,7 @@ class AdminHeader extends Component {
                       <i className="arrow-icon" />
                     </span>
                   </NavLink>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

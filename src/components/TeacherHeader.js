@@ -173,10 +173,10 @@ class TeacherHeader extends Component {
                           />
                         </div>
                         <div className="m-l-10">
-                          <p className="m-b-0 text-dark font-weight-semibold">
+                          <p className="m-t-15 text-dark font-weight-semibold">
                             Ali Zain
                           </p>
-                          <p className="m-b-0 opacity-07">UI/UX Desinger</p>
+                          {/* <p className="m-b-0 opacity-07">UI/UX Desinger</p> */}
                         </div>
                       </div>
                     </div>
@@ -187,7 +187,7 @@ class TeacherHeader extends Component {
                       <div className="d-flex align-items-center justify-content-between">
                         <div>
                           <i className="anticon opacity-04 font-size-16 anticon-user" />
-                          <span className="m-l-10">Edit Profile</span>
+                          <span className="m-l-10">View Profile</span>
                         </div>
                         <i className="anticon font-size-10 anticon-right" />
                       </div>
@@ -204,7 +204,7 @@ class TeacherHeader extends Component {
                         <i className="anticon font-size-10 anticon-right" />
                       </div>
                     </a>
-                    <a
+                    {/* <a
                       href="javascript:void(0);"
                       className="dropdown-item d-block p-h-15 p-v-10"
                     >
@@ -215,7 +215,7 @@ class TeacherHeader extends Component {
                         </div>
                         <i className="anticon font-size-10 anticon-right" />
                       </div>
-                    </a>
+                    </a> */}
                     <button
                       onClick={this.logout}
                       className="dropdown-item d-block p-h-15 p-v-10"
@@ -258,7 +258,7 @@ class TeacherHeader extends Component {
                                     </span>
                                 </NavLink>
                             </li> */}
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <NavLink className="dropdown-toggle" to="/teacher/mail">
                     <span className="icon-holder">
                       <i className="anticon anticon-inbox" />
@@ -268,7 +268,7 @@ class TeacherHeader extends Component {
                       <i className="arrow-icon" />
                     </span>
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   <NavLink className="dropdown-toggle" to="/teacher/students">
                     <span className="icon-holder">
@@ -350,17 +350,20 @@ class TeacherHeader extends Component {
                     </span>
                   </NavLink>
                 </li>
-                {/* <li className="nav-item dropdown">
-                                <NavLink className="dropdown-toggle" to="/teacher/submissions">
-                                    <span className="icon-holder">
-                                        <i className="anticon anticon-bars" />
-                                    </span>
-                                    <span className="title">Student Submissions</span>
-                                    <span className="arrow">
-                                        <i className="arrow-icon" />
-                                    </span>
-                                </NavLink>
-                            </li> */}
+                <li className="nav-item dropdown">
+                  <NavLink
+                    className="dropdown-toggle"
+                    to="/teacher/feedback"
+                  >
+                    <span className="icon-holder">
+                      <i className="anticon anticon-bars" />
+                    </span>
+                    <span className="title">Feedback</span>
+                    <span className="arrow">
+                      <i className="arrow-icon" />
+                    </span>
+                  </NavLink>
+                </li>
                 {/* <li className="nav-item dropdown">
                                 <NavLink className="dropdown-toggle" to="/teacher/preview">
                                     <span className="icon-holder">
@@ -372,7 +375,7 @@ class TeacherHeader extends Component {
                                     </span>
                                 </NavLink>
                             </li> */}
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <NavLink className="dropdown-toggle" to="/teacher/profile">
                     <span className="icon-holder">
                       <i className="anticon anticon-lock" />
@@ -393,7 +396,7 @@ class TeacherHeader extends Component {
                       <i className="arrow-icon" />
                     </span>
                   </NavLink>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

@@ -214,7 +214,7 @@ class AdminDashboard extends Component {
             </div>
           </div>
 
-          <div className="col-lg-6">
+          {/* <div className="col-lg-6">
             <div className="card">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -260,7 +260,7 @@ class AdminDashboard extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <footer className="footer">

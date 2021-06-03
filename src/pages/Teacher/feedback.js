@@ -4,12 +4,14 @@ const ls = require("local-storage");
 const auth = require("../../axios/auth");
 const lecturer = require("../../axios/lecturer");
 
-class TeacherViewStudents extends Component {
+class Feedback extends Component {
   state = {
     lecturerId: ls.get("teacherId"),
     userType: ls.get("userType"),
     token: ls.get("token"),
-    lecturerStudents: [],
+    feedbacks: [],
+    title:'',
+    details:'',
     loggedIn: true,
   };
 
@@ -32,20 +34,29 @@ class TeacherViewStudents extends Component {
     }
   };
 
-  getTeacherSudents = async () => {
+  getFeedbacks = async () => {
     try {
-      let studentsList = await lecturer.getStudents(
-        this.state.lecturerId,
-        this.state.token
-      );
-      console.log(studentsList);
+      let feedbacks = await lecturer.getfeedbacks(this.state.token);
+      console.log(feedbacks);
       this.setState({
-        lecturerStudents: studentsList,
+        feedbacks: feedbacks,
       });
     } catch (error) {
       console.log(error);
     }
   };
+
+  setTitle(e) {
+      this.setState({
+          title:e.target.value
+      })
+  }
+
+  setDetails(e) {
+    this.setState({
+        details:e.target.value
+    })
+}
 
   // removeFromSection = async (studentId) => {
   //   try {
@@ -74,7 +85,7 @@ class TeacherViewStudents extends Component {
       this.verification();
     }
     if (this.state.loggedIn) {
-      this.getTeacherSudents();
+      this.getFeedbacks();
     }
   }
 
@@ -83,6 +94,78 @@ class TeacherViewStudents extends Component {
       return (
         <div>
           <div className="main-content">
+            <div
+              class="modal fade"
+              id="feedback"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Add Feedback
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div className="form-group">
+                      <label
+                        className="font-weight-semibold"
+                        htmlFor="userName"
+                      >
+                        Title:
+                      </label>
+                      <div className="input-affix">
+                        <i className="prefix-icon anticon anticon-user" />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="title"
+                          placeholder="title"
+                          onChange={(e) => this.setTitle(e)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-row">
+                      <div className="form-group col-md-12">
+                        <label htmlFor="inputEmail4">Description</label>
+                        <textarea
+                          className="form-control"
+                          id="description"
+                          placeholder="Details"
+                          onChange={(e) => {
+                            this.setDetails(e);
+                          }}
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="page-header">
               <div className="header-sub-title">
                 <nav className="breadcrumb breadcrumb-dash">
@@ -100,36 +183,51 @@ class TeacherViewStudents extends Component {
               </div>
               <div className="card">
                 <div className="card-body">
-                  <h4>View All Students</h4>
+                  <div className="row">
+                    <div className="col-md-9">
+                      <h4>Feedbacks</h4>
+                      <h6>
+                        State any issue regarding the software and we will see
+                        to it
+                      </h6>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
+                        <div className="d-flex align-items-center justify-content-between">
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#feedback"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="m-t-25">
                     <table id="data-table" className="table">
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Name</th>
-                          <th>Registration Number</th>
-                          <th>Email</th>
-                          <th>Subject</th>
-                          <th>Section</th>
-                          <th>Status</th>
+                          <th>Title</th>
+                          <th>Critical</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {this.state.lecturerStudents.map((data, index) => {
+                        {this.state.feedbacks.map((data, index) => {
                           let AtRisk = "Not At Risk";
                           if (data.atRisk === 1) {
                             AtRisk = " At Risk";
                           }
                           return (
                             <tr key={index}>
-                              <td>{data.studentId}</td>
-                              <td>{data.name}</td>
-                              <td>{data.rollNo}</td>
-                              <td>{data.email}</td>
-                              <td>{data.subject}</td>
-                              <td>{data.section}</td>
-                              <td>{AtRisk}</td>
+                              <td>{data.fbId}</td>
+                              <td>{data.title}</td>
+                              <td>{data.critical}</td>
                               <td>
                                 <div className="dropdown dropdown-animated scale-left">
                                   <a
@@ -142,15 +240,13 @@ class TeacherViewStudents extends Component {
                                   <div className="dropdown-menu">
                                     <Link
                                       className="dropdown-item"
-                                      to="/teacher/studentProfile"
+                                      to="/teacher/viewFeedback"
                                       state={{
-                                        studentId: data.studentId,
+                                        fbId: data.fbId,
                                       }}
                                     >
                                       <i className="anticon anticon-eye" />
-                                      <span className="m-l-10">
-                                        View Profile
-                                      </span>
+                                      <span className="m-l-10">View</span>
                                     </Link>
                                     {/* <button onClick={()=>{this.removeFromSection(data.studentId)}} className="dropdown-item" type="button">
                                                 <i className="anticon anticon-delete" />
@@ -166,12 +262,8 @@ class TeacherViewStudents extends Component {
                       <tfoot>
                         <tr>
                           <th>ID</th>
-                          <th>Name</th>
-                          <th>Registration Number</th>
-                          <th>Email</th>
-                          <th>Subject</th>
-                          <th>Section</th>
-                          <th>Status</th>
+                          <th>Title</th>
+                          <th>Critical</th>
                           <th>Action</th>
                         </tr>
                       </tfoot>
@@ -203,4 +295,4 @@ class TeacherViewStudents extends Component {
   }
 }
 
-export default TeacherViewStudents;
+export default Feedback;

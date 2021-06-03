@@ -62,6 +62,7 @@ import ErrorPage from "./pages/error.js";
 import StudentSubmission from "./pages/Teacher/StudentSubmission";
 import StudentSubmission2 from "./pages/Teacher/StudentSubmission2";
 import TeacherViewSingleDataSet from "./pages/Teacher/TeacherViewDataSet";
+import FeedBack from './pages/Teacher/feedback'
 
 import Settings from "./pages/Settings.js";
 import Search from "./components/Search.js";
@@ -132,6 +133,7 @@ function App() {
         <StudentCallibration path="/studentCallibration" />
         <TeacherViewSingleDataSet path="/viewDataSet" />
         <ViewAssignedDataSet path="/viewAssignedDataSet" />
+        <FeedBack path="/feedback" />
         <Settings path="/settings" />
       </TeacherHeader>
     </Router>

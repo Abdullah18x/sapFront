@@ -54,6 +54,24 @@ class ViewSectionDetails extends Component {
     }
   };
 
+  unAssignTeacher = async (lecturerId, assignId) => {
+    try {
+      let unassignedStatus = await admin.unAssignTeacher(
+        lecturerId,
+        assignId,
+        this.state.token
+      );
+      // let returnedSection = await admin.getAssignedSections(
+      //   this.props.location.state.teacherId,
+      //   this.state.token
+      // );
+      // this.setState({
+      //   assignedSections: returnedSection,
+      // });
+      this.setSection()
+    } catch (error) {}
+  };
+
   // setStudents = async () => {
   //   try {
   //     let sectionId = this.props.location.state.sectionId;
@@ -174,6 +192,12 @@ class ViewSectionDetails extends Component {
                                         <span className="m-l-10">View Students</span>
                                     </button> */}
                                   <button
+                                    onClick={() => {
+                                      this.unAssignTeacher(
+                                        data.lecturerId,
+                                        data.assignId
+                                      );
+                                    }}
                                     className="dropdown-item"
                                     type="button"
                                   >

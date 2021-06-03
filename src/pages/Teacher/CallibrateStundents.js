@@ -53,7 +53,7 @@ class StudentCallibration extends Component {
   };
 
   setSections = () => {
-    if (this.state.sections.length > 1) {
+    if (this.state.sections.length >= 1) {
       return this.state.sections.map((data, fields) => {
         return (
           <option value={JSON.stringify(data)}>
@@ -99,7 +99,7 @@ class StudentCallibration extends Component {
         if (data.atRisk != null) {
           atRisk = "At Risk";
         } else {
-          atRisk = "Not Yet Callibrated";
+          atRisk = "Not At Risk";
         }
         return (
           <tr key={index}>
@@ -152,13 +152,22 @@ class StudentCallibration extends Component {
           this.state.subjectId,
           this.state.token
         );
+
+        let getAssignedDataSetssStats =
+        await lecturer.getAssignedDataSetssStats(
+          this.state.lecturerId,
+          this.state.sectionId,
+          this.state.subjectId,
+          this.state.token
+        );
       console.log(getAssignedAssignmentsStats);
+      console.log(getAssignedDataSetssStats);
       this.setState({
-        totalAssigned: getAssignedAssignmentsStats[0].totalAssigned,
-        totalMarks: getAssignedAssignmentsStats[0].totalMarks,
-        totalTime: getAssignedAssignmentsStats[0].totalTime,
+        totalAssigned: getAssignedAssignmentsStats[0].totalAssigned+getAssignedAssignmentsStats[0].totalAssigned,
+        totalMarks: parseInt(getAssignedAssignmentsStats[0].totalMarks)+parseInt(getAssignedDataSetssStats[0].totalMarks),
+        totalTime: parseInt(getAssignedAssignmentsStats[0].totalTime)+parseInt(getAssignedDataSetssStats[0].totalTime),
       });
-      if (this.state.totalAssigned >= 3) {
+      if (this.state.totalAssigned >= 2) {
         this.setState({
           atRiskStudents: [],
         });

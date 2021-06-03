@@ -387,9 +387,9 @@ class ViewAssignedAssignment extends Component {
                                                   className="dropdown-item"
                                                   to="/teacher/studentSubmission"
                                                   state={{
-                                                    assignedId: data.assignedId,
+                                                    assignedId: this.props.location.state.assignedId,
                                                     assignmentId:
-                                                      data.assignmentId,
+                                                      this.props.location.state.assignmentId,
                                                     studentId: data.studentId,
                                                   }}
                                                 >
@@ -467,12 +467,11 @@ class ViewAssignedAssignment extends Component {
                                                 <i className="anticon anticon-ellipsis" />
                                               </a>
                                               <div className="dropdown-menu">
-                                                <Link
+                                              <Link
                                                   className="dropdown-item"
-                                                  to="/teacher/viewAssignedAssignment"
+                                                  to="/teacher/studentProfile"
                                                   state={{
-                                                    assignmentId:
-                                                      data.assignmentId,
+                                                    studentId: data.studentId,
                                                   }}
                                                 >
                                                   <i className="anticon anticon-eye" />
@@ -480,7 +479,7 @@ class ViewAssignedAssignment extends Component {
                                                     View Profile
                                                   </span>
                                                 </Link>
-                                                <button
+                                                {/* <button
                                                   onClick={() => {
                                                     this.markAsUnsubmitted(
                                                       data.studentId
@@ -493,7 +492,7 @@ class ViewAssignedAssignment extends Component {
                                                   <span className="m-l-10">
                                                     Mark As not Submitted
                                                   </span>
-                                                </button>
+                                                </button> */}
                                               </div>
                                             </div>
                                           </td>
