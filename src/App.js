@@ -16,6 +16,9 @@ import StudentViewAssignments from "./pages/Student/StudentViewAssignments.js";
 import StudentProfile from "./pages/Student/StudentProfile.js";
 import ViewAssignmentStd from "./pages/Student/ViewAssignment";
 import ViewDataSet from "./pages/Student/ViewDataSet";
+import GradedAssignments from './pages/Student/GradedAssignments'
+import FeedBack3 from './pages/Student/feedback'
+import ViewFeedBack3 from './pages/Student/ViewFeedback';
 import IDE from "./pages/IDE.js";
 
 import AdminDashboard from "./pages/Admin/AdminDashboard.js";
@@ -86,6 +89,9 @@ function App() {
         <StudentProfile path="/profile" />
         <ViewAssignmentStd path="/viewAssignment" />
         <ViewDataSet path="/stdViewDataSet" />
+        <GradedAssignments path='/gradedAssignment' />
+        <FeedBack3 path="/feedback" />
+        <ViewFeedBack3 path='/viewFeedback' />
         <Settings path="/settings" />
       </StudentHeader>
 

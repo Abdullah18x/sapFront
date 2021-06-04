@@ -120,9 +120,9 @@ class StudentCallibration extends Component {
                 <div className="dropdown-menu">
                   <Link
                     className="dropdown-item"
-                    to="/teacher/updateAssignment"
+                    to="/teacher/studentProfile"
                     state={{
-                      assignmentId: data.assignmentId,
+                      studentId: data.studentId,
                     }}
                   >
                     <i className="anticon anticon-eye" />

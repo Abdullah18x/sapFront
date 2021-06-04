@@ -387,9 +387,12 @@ class ViewAssignedAssignment extends Component {
                                                   className="dropdown-item"
                                                   to="/teacher/studentSubmission"
                                                   state={{
-                                                    assignedId: this.props.location.state.assignedId,
+                                                    assignedId:
+                                                      this.props.location.state
+                                                        .assignedId,
                                                     assignmentId:
-                                                      this.props.location.state.assignmentId,
+                                                      this.props.location.state
+                                                        .assignmentId,
                                                     studentId: data.studentId,
                                                   }}
                                                 >

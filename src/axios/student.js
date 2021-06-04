@@ -38,6 +38,24 @@ let getAssignments = async (studentId, token) =>{
       }
   }
 
+  let getAssignments2 = async (studentId, token) =>{
+    try {
+        const response = await axios.post(`${url}/assignment/getAllMarkedAssignments`,{
+            studentId:studentId
+        },{
+          headers:{
+            Authorization: token
+          }
+        }
+        );
+        return response.data
+      } catch (error) {
+        console.log(error)
+        return error
+        
+      }
+  }
+
   let getAssignment = async (assignmentId, token) =>{
     try {
         const response = await axios.post(`${url}/assignment/getAssignmentStd`,{
@@ -111,6 +129,25 @@ let getAssignments = async (studentId, token) =>{
         
       }
   }
+
+  let getDataSets2 = async (studentId, token) =>{
+    try {
+        const response = await axios.post(`${url}/dataSet/getMarkedDataSets`,{
+            studentId:studentId
+        },{
+          headers:{
+            Authorization: token
+          }
+        }
+        );
+        return response.data
+      } catch (error) {
+        console.log(error)
+        return error
+        
+      }
+  }
+
   let getDataSet = async (datasetId, token) =>{
     try {
         const response = await axios.post(`${url}/dataSet/getDataSet3`,{
@@ -129,12 +166,118 @@ let getAssignments = async (studentId, token) =>{
       }
   }
 
+  let getfeedbacks = async (token) => {
+    try {
+      const response = await axios.post(
+        `${url}/feedback/getFeedbacksS`,{},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+  
+  let getfeedback = async (fbId,token) => {
+    try {
+      const response = await axios.post(
+        `${url}/feedback/getFeedbackSt`,{
+          fbId:fbId
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+  
+  let giveFeedback = async (userId,title, userDetails, feedback,token) => {
+    try {
+      const response = await axios.post(
+        `${url}/feedback/giveFeedbackS`,{
+          userId:userId,
+          userType:2,
+          title:title,
+          userDetails:userDetails,
+          feedback:feedback
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+  
+  let comment = async (fbId, userDetails, comment,token) => {
+    try {
+      const response = await axios.post(
+        `${url}/feedback/commentSt`,{
+          fbId:fbId,
+          userDetails:userDetails,
+          comment:comment
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+  
+  let getComments = async (fbId,token) => {
+    try {
+      const response = await axios.post(
+        `${url}/feedback/commentsS`,{
+          fbId:fbId
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
   export{
     getStudent,
     getAssignments,
+    getAssignments2,
     getAssignment,
     getStudentSubmissionS,
     getDataSets,
     getStudentSubmissionS2,
-    getDataSet
+    getDataSet,
+    getDataSets2,
+    getfeedbacks,
+    getfeedback,
+    giveFeedback,
+    comment,
+    getComments
   }
