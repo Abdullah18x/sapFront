@@ -1003,7 +1003,7 @@ let gradeAssignment2 = async (submissionSId, marksObtained, token) => {
 let getfeedbacks = async (token) => {
   try {
     const response = await axios.post(
-      `${url}/feedback/getFeedbacks`,{},
+      `${url}/feedback/getFeedbacksL`,{},
       {
         headers: {
           Authorization: token,
@@ -1017,6 +1017,87 @@ let getfeedbacks = async (token) => {
   }
 };
 
+let getfeedback = async (fbId,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/getFeedbackL`,{
+        fbId:fbId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let giveFeedback = async (userId,title, userDetails, feedback,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/giveFeedbackL`,{
+        userId:userId,
+        userType:2,
+        title:title,
+        userDetails:userDetails,
+        feedback:feedback
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let comment = async (fbId, userDetails, comment,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/commentL`,{
+        fbId:fbId,
+        userDetails:userDetails,
+        comment:comment
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getComments = async (fbId,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/commentsL`,{
+        fbId:fbId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 export {
   getUser,
   getStudent,
@@ -1066,5 +1147,9 @@ export {
   checkAssigned,
   checkAssigned2,
   getRecentSubmissionsD,
-  getfeedbacks
+  getfeedbacks,
+  getfeedback,
+  giveFeedback,
+  comment,
+  getComments
 };

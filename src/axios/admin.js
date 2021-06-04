@@ -815,6 +815,105 @@ let getStudentSubmission2 = async (studentId,assignedSId, token) =>{
     }
 }
 
+let getfeedbacks = async (token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/getFeedbacks`,{},
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getfeedback = async (fbId,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/getFeedback`,{
+        fbId:fbId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let giveFeedback = async (userId,title, userDetails, feedback,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/giveFeedback`,{
+        userId:userId,
+        userType:2,
+        title:title,
+        userDetails:userDetails,
+        feedback:feedback
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let comment = async (fbId, userDetails, comment,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/comment`,{
+        fbId:fbId,
+        userDetails:userDetails,
+        comment:comment
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+let getComments = async (fbId,token) => {
+  try {
+    const response = await axios.post(
+      `${url}/feedback/comments`,{
+        fbId:fbId
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export {
   getUser,
   getLecturerList,
@@ -857,5 +956,10 @@ export {
   getRecentStudentSubmissionsD,
   getAssignment,
   getStudentSubmission,
-  getStudentSubmission2
+  getStudentSubmission2,
+  getfeedbacks,
+  getfeedback,
+  giveFeedback,
+  comment,
+  getComments
 };

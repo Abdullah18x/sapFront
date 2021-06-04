@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Link } from "@reach/router";
 const ls = require("local-storage");
 const auth = require("../../axios/auth");
-const lecturer = require("../../axios/lecturer");
+const admin = require("../../axios/admin");
 
 class Feedback extends Component {
   state = {
-    lecturerId: ls.get("teacherId"),
+    adminId: ls.get('adminId'),
     userType: ls.get("userType"),
     token: ls.get("token"),
     feedbacks: [],
@@ -16,27 +16,25 @@ class Feedback extends Component {
   };
 
   verification = async () => {
-    let verifyToken = await auth.verifyToken(
-      this.state.lecturerId,
-      this.state.userType,
-      this.state.token
-    );
-    if (verifyToken.length === 0) {
+    let verifyToken = await auth.verifyToken(this.state.adminId,this.state.userType,this.state.token)
+    if(verifyToken.length === 0 ){
       this.setState({
-        loggedIn: false,
-      });
-    } else {
-      if (verifyToken.expired === 1) {
+        loggedIn:false
+      })
+      return
+    }else{
+      if(verifyToken.expired === 1){
         this.setState({
-          loggedIn: false,
-        });
+          loggedIn:false
+        })
       }
+      return
     }
-  };
+  }
 
   getFeedbacks = async () => {
     try {
-      let feedbacks = await lecturer.getfeedbacks(this.state.token);
+      let feedbacks = await admin.getfeedbacks(this.state.token);
       console.log(feedbacks);
       this.setState({
         feedbacks: feedbacks,
@@ -48,16 +46,15 @@ class Feedback extends Component {
 
   giveFeedback = async () => {
     try {
-      let getLecturer = await lecturer.getUser(
-        this.state.lecturerId,
+      let getAdmin = await admin.getUser(
+        this.state.adminId,
         this.state.token
       );
-      console.log(getLecturer);
-      let userDetails = "Lecturer: ".concat(getLecturer.name);
+      let userDetails = "Admin: ".concat(getAdmin.name);
       console.log(userDetails);
       if (this.state.title != "" && this.state.details != "") {
-        let submitF = await lecturer.giveFeedback(
-          this.state.lecturerId,
+        let submitF = await admin.giveFeedback(
+          this.state.adminId,
           this.state.title,
           userDetails,
           this.state.details,
@@ -87,12 +84,12 @@ class Feedback extends Component {
 
   componentDidMount() {
     if (
-      this.state.lecturerId === null ||
-      this.state.lecturerId === undefined ||
-      this.state.userType === null ||
-      this.state.userType === undefined ||
-      this.state.token === null ||
-      this.state.token === undefined
+        this.state.adminId === null ||
+        this.state.adminId === undefined ||
+        this.state.userType === null ||
+        this.state.userType === undefined ||
+        this.state.token === null ||
+        this.state.token === undefined
     ) {
       this.setState({
         loggedIn: false,
@@ -267,7 +264,7 @@ class Feedback extends Component {
                                   <div className="dropdown-menu">
                                     <Link
                                       className="dropdown-item"
-                                      to="/teacher/viewFeedback"
+                                      to="/admin/viewFeedback"
                                       state={{
                                         fbId: data.fbId,
                                       }}

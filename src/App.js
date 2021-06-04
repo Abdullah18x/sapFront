@@ -40,6 +40,8 @@ import ViewDataSets from "./pages/Admin/AdminViewDataSets";
 import AdminViewSingleDataSet from "./pages/Admin/AdminViewSIngleDataSet";
 import StudentSubmissionA from "./pages/Admin/StudentSubmission";
 import StudentSubmission2A from "./pages/Admin/StudentSubmission2";
+import FeedBack from './pages/Admin/feedback'
+import ViewFeedBack from './pages/Admin/ViewFeedback';
 
 import TeacherDashboard from "./pages/Teacher/TeacherDashboard.js";
 import TeacherAddAssignments from "./pages/Teacher/TeacherAddAssignments.js";
@@ -62,7 +64,8 @@ import ErrorPage from "./pages/error.js";
 import StudentSubmission from "./pages/Teacher/StudentSubmission";
 import StudentSubmission2 from "./pages/Teacher/StudentSubmission2";
 import TeacherViewSingleDataSet from "./pages/Teacher/TeacherViewDataSet";
-import FeedBack from './pages/Teacher/feedback'
+import FeedBack2 from './pages/Teacher/feedback'
+import ViewFeedBack2 from './pages/Teacher/ViewFeedback';
 
 import Settings from "./pages/Settings.js";
 import Search from "./components/Search.js";
@@ -110,6 +113,8 @@ function App() {
         <ViewStudents path="/viewStudents" />
         <StudentSubmissionA path='/studentSubmission'/>
         <StudentSubmission2A path='/studentSubmission2'/>
+        <FeedBack path="/feedback" />
+        <ViewFeedBack path='/viewFeedback' />
       </AdminHeader>
 
       <TeacherHeader path="/teacher/">
@@ -133,7 +138,8 @@ function App() {
         <StudentCallibration path="/studentCallibration" />
         <TeacherViewSingleDataSet path="/viewDataSet" />
         <ViewAssignedDataSet path="/viewAssignedDataSet" />
-        <FeedBack path="/feedback" />
+        <FeedBack2 path="/feedback" />
+        <ViewFeedBack2 path='/viewFeedback' />
         <Settings path="/settings" />
       </TeacherHeader>
     </Router>
