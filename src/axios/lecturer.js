@@ -478,6 +478,23 @@ let deleteAssignedAssignment = async (assignmentId, assignedId, token) => {
   }
 };
 
+let deleteAssignedAssignment2 = async (datasetId, assignedSId, token) => {
+  try {
+    await axios.delete(`${url}/dataSet/deleteAssignedAssignment`, {
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        datasetId: datasetId,
+        assignedSId: assignedSId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 let removeStudentFromSection = async (studentId, token) => {
   try {
     await axios.delete(`${url}/student/removeStudentFromSection`, {
@@ -1120,6 +1137,7 @@ export {
   updateAssignmentWF,
   deleteAssignment,
   deleteAssignedAssignment,
+  deleteAssignedAssignment2,
   getSubmittedAssignments,
   getPendingStudents,
   getStudentSubmission,
@@ -1151,5 +1169,5 @@ export {
   getfeedback,
   giveFeedback,
   comment,
-  getComments
+  getComments,
 };

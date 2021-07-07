@@ -55,7 +55,7 @@ changeSubject = (e) => {
         if (checkAssigned.length === 0) {
             let assignLecturer = await admin.assignLecturer(this.state.lecturerId,this.state.subjectId, sectionId,  1 , this.state.token)
             await admin.updateLecturerStatus(this.state.lecturerId, 1, this.state.token)
-            alert(sectionId)
+            alert('Assigned')
         }
         else{
             alert(`Already Lecturer Assigned to Section for the Selected Subject`)

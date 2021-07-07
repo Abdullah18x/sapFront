@@ -163,10 +163,11 @@ class StudentCallibration extends Component {
       console.log(getAssignedAssignmentsStats);
       console.log(getAssignedDataSetssStats);
       this.setState({
-        totalAssigned: getAssignedAssignmentsStats[0].totalAssigned+getAssignedAssignmentsStats[0].totalAssigned,
+        totalAssigned: getAssignedAssignmentsStats[0].totalAssigned+getAssignedDataSetssStats[0].totalAssigned,
         totalMarks: parseInt(getAssignedAssignmentsStats[0].totalMarks)+parseInt(getAssignedDataSetssStats[0].totalMarks),
         totalTime: parseInt(getAssignedAssignmentsStats[0].totalTime)+parseInt(getAssignedDataSetssStats[0].totalTime),
       });
+      console.log(this.state.totalAssigned)
       if (this.state.totalAssigned >= 2) {
         this.setState({
           atRiskStudents: [],

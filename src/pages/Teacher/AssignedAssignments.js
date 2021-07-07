@@ -92,6 +92,19 @@ class TeacherAssignedAssignments extends Component {
     }
   };
 
+  deleteAssigned2 = async (datasetId, assignedSId) => {
+    try {
+      let deleteAssignment = await lecturer.deleteAssignedAssignment2(
+        datasetId,
+        assignedSId,
+        this.state.token
+      );
+      this.setDataSets();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   formatDate = (date) => {
     let format = date.replace("T", " ").replace(".000Z", "");
     return format;
@@ -248,9 +261,9 @@ class TeacherAssignedAssignments extends Component {
                     </button>
                     <button
                       onClick={() => {
-                        this.deleteAssigned(
-                          data.assignmentId,
-                          data.assignedId
+                        this.deleteAssigned2(
+                          data.datasetId,
+                          data.assignedSId
                         );
                       }}
                       className="dropdown-item"
